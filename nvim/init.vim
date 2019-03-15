@@ -1,7 +1,13 @@
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
-
+Plug 'posva/vim-vue'
+Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-syntastic/syntastic'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'Valloric/MatchTagAlways'
+Plug 'w0rp/ale'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
@@ -14,22 +20,42 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Shutnik/jshint2.vim'
+Plug 'ayu-theme/ayu-vim'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 
 " HTML
 Plug 'alvan/vim-closetag', {'for': 'html' }
+Plug 'mattn/emmet-vim'
 
-
+" easymotion
+Plug 'easymotion/vim-easymotion'
 " JavaScript
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
 Plug 'othree/yajs.vim', {'for': 'javascript'}
 Plug 'othree/es.next.syntax.vim', {'for': 'javascript'}
 Plug 'gavocanov/vim-js-indent', {'for': 'javascript'}
-
+Plug 'pangloss/vim-javascript'
 call plug#end()
 
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+" matchtags
+nnoremap <leader>% :MtaJumpToOtherTag<cr>
+
+"
 filetype plugin indent on
+set termguicolors
+let ayucolor="mirage"
+colorscheme ayu
 let base16colorspace=256
 syntax enable
 set background=dark
@@ -57,13 +83,39 @@ nnoremap J mzJ`z
 let mapleader="\<SPACE>"
 nnoremap <Leader>w :w<CR>
 
+" matchtag
+let g:mta_filetypes = {'html': 1, 'xhtml': 1, 'js': 1, 'jsx': 1}
 
-" Avoid typos
-noremap :W :w
-noremap :Q :q
+" emmet
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
 
 
-" Move between buffers
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+
+"Move between buffers
 nmap <Leader>l :bnext<CR>
 nmap <Leader>h :bprevious<CR>
 
@@ -79,9 +131,12 @@ nnoremap Q @q
 
 set noerrorbells        " No beeps.
 set modeline            " Enable modeline.
-set esckeys             " Cursor keys in insert mode.
 set linespace=0         " Set line-spacing to minimum.
 set nojoinspaces        " Prevents insertin two spaces after punctuation on a join (J)
+
+
+map <C-a> :NERDTreeToggle<CR>
+
 
 " More natural splits
 set splitbelow          " Horizontal split below current.
@@ -157,6 +212,7 @@ endfunction
 
 inoremap <expr> <Enter> EnterOrIndentTag()
 
+autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
 
 " using tabs
 nnoremap th  :tabfirst<CR>
@@ -171,6 +227,11 @@ nnoremap <S-h> gT
 nnoremap <S-l> gt
 
 
+ " Gutentags
+" Don't load me if there's no ctags file
+if !executable('ctags')
+    let g:gutentags_dont_load = 1
+  endif
 
 " Airline
 let g:airline#extensions#tabline#enabled = 2
@@ -184,3 +245,19 @@ let g:airline_left_sep = ' '
 let g:airline_left_alt_sep = '|'
 let g:airline_right_sep = ' '
 let g:airline_right_alt_sep = '|'
+let g:ruby_host_prog = '/home/jefferson/.gem/ruby/2.6.0/bin/neovim-ruby-host'
+let g:airline#extensions#ale#enabled = 1
+"lint
+let g:ale_sign_error = '●' " Less aggressive than the default '>>'
+let g:ale_sign_warning = '.'
+let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
+let g:ale_completion_enabled = 1
+let b:ale_fixers = ['prettier', 'eslint']
+let g:ale_fix_on_save = 1
+
+let g:mta_use_matchparen_group = 1
+let g:mta_set_default_matchtag_color = 1
+
+
+"vue
+let g:vue_disable_pre_processors=1
