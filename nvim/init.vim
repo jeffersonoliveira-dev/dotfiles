@@ -3,14 +3,13 @@ call plug#begin('~/.vim/plugged')
 Plug 'posva/vim-vue'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-syntastic/syntastic'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'docunext/closetag.vim'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'Valloric/MatchTagAlways'
 Plug 'w0rp/ale'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
@@ -19,25 +18,24 @@ Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'Shutnik/jshint2.vim'
 Plug 'ayu-theme/ayu-vim'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startup = 1
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+" if has('nvim')
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+  " Plug 'Shougo/deoplete.nvim'
+  " Plug 'roxma/nvim-yarp'
+  " Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+" let g:deoplete#enable_at_startup = 1
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
 
 " HTML
 Plug 'alvan/vim-closetag', {'for': 'html' }
 Plug 'mattn/emmet-vim'
 
 " easymotion
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 " JavaScript
 Plug 'moll/vim-node'
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
@@ -47,11 +45,11 @@ Plug 'gavocanov/vim-js-indent', {'for': 'javascript'}
 Plug 'pangloss/vim-javascript'
 call plug#end()
 
-
+let mapleader = ' '
+nnoremap <Leader>w :w<CR>
 " matchtags
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
-
-"
+" autocmd BufRead,BufNewFile *.vue setfiletype html
 filetype plugin indent on
 set termguicolors
 let ayucolor="mirage"
@@ -66,7 +64,6 @@ set tabstop=2
 set mouse=a
 set scrolljump=5                " Lines to scroll when cursor leaves screen
 set scrolloff=3                 " Minimum lines to keep above and below cursor
-autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml,perl autocmd BufWritePre <buffer> call StripTrailingWhitespace()
 set smartcase
 set expandtab
 set shiftwidth=2
@@ -80,34 +77,9 @@ set showmode            " Show current mode.
 set formatoptions+=o    " Continue comment marker in new lines.
 set textwidth=0         " Hard-wrap long lines as you type them.
 nnoremap J mzJ`z
-let mapleader="\<SPACE>"
-nnoremap <Leader>w :w<CR>
 
 " matchtag
 let g:mta_filetypes = {'html': 1, 'xhtml': 1, 'js': 1, 'jsx': 1}
-
-" emmet
-let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-    \      'extends' : 'jsx',
-    \  },
-  \}
-
-
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')
@@ -128,12 +100,10 @@ nnoremap ; :
 " Use Q to execute default register.
 nnoremap Q @q
 
-
 set noerrorbells        " No beeps.
 set modeline            " Enable modeline.
 set linespace=0         " Set line-spacing to minimum.
 set nojoinspaces        " Prevents insertin two spaces after punctuation on a join (J)
-
 
 map <C-a> :NERDTreeToggle<CR>
 
@@ -153,7 +123,7 @@ nmap <Leader>s :%s//g<Left><Left>
 " Configure CtrlP
 let g:ctrlp_working_path_mode = 'r'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = '[/].(git|hg|svn)$'
 
 
 " Open file menu
@@ -182,8 +152,6 @@ vnoremap < <gv
 vnoremap > >gv
 
 
-" JShint
-let jshint2_save = 1
 " show next jshint error
 nnoremap <silent><F2> :lnext<CR>
 inoremap <silent><F2> <C-O>:lnext<CR>
@@ -193,25 +161,6 @@ vnoremap <silent><F2> :lnext<CR>
 nnoremap <silent><F3> :lprevious<CR>
 inoremap <silent><F3> <C-O>:lprevious<CR>
 vnoremap <silent><F3> :lprevious<CR>
-
-
-
-function EnterOrIndentTag()
-    let line = getline(".")
-    let col = getpos(".")[2]
-    let before = line[col-2]
-    let after = line[col-1]
-    let opening = ["[", "{", "(", ">"]
-    let closing = ["]", "}", ")", "<"]
-
-    if index(opening, before) >= 0 && index(closing,after) >= 0
-        return "\<Enter>\<C-o>O"
-    endif
-    return "\<Enter>"
-endfunction
-
-inoremap <expr> <Enter> EnterOrIndentTag()
-
 autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
 
 " using tabs
@@ -226,12 +175,6 @@ nnoremap tc  :tabclose<CR>
 nnoremap <S-h> gT
 nnoremap <S-l> gt
 
-
- " Gutentags
-" Don't load me if there's no ctags file
-if !executable('ctags')
-    let g:gutentags_dont_load = 1
-  endif
 
 " Airline
 let g:airline#extensions#tabline#enabled = 2
@@ -253,7 +196,7 @@ let g:ale_sign_warning = '.'
 let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 let g:ale_completion_enabled = 1
 let b:ale_fixers = ['prettier', 'eslint']
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 
 let g:mta_use_matchparen_group = 1
 let g:mta_set_default_matchtag_color = 1
@@ -261,3 +204,51 @@ let g:mta_set_default_matchtag_color = 1
 
 "vue
 let g:vue_disable_pre_processors=1
+
+set hidden
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
+let g:coc_snippet_next = '<TAB>'
+let g:coc_snippet_prev = '<S-TAB>'
+
+autocmd FileType json syntax match Comment +\/\/.\+$+
+
+function! Expander()
+  let line   = getline(".")
+  let col    = col(".")
+  let first  = line[col-2]
+  let second = line[col-1]
+  let third  = line[col]
+
+  if first ==# ">"
+    if second ==# "<" && third ==# "/"
+      return "\<CR>\<C-o>==\<C-o>O"
+
+    else
+      return "\<CR>"
+
+    endif
+
+  else
+    return "\<CR>"
+
+  endif
+
+endfunction
+
+inoremap <expr> <CR> Expander()
