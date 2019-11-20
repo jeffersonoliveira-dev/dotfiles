@@ -1,25 +1,19 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'ntpeters/vim-better-whitespace'
+"Plug 'ntpeters/vim-better-whitespace'
 Plug 'itchyny/vim-cursorword'
+Plug 'vim-airline/vim-airline'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'rakr/vim-one'
+Plug 'mhinz/vim-janah'
+" Graphql
+Plug 'jparise/vim-graphql'
 "javascript
-Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'maxmellon/vim-jsx-pretty',   { 'for': ['javascript', 'javascript.jsx','typescript', 'typescript.tsx'] }
-Plug 'othree/html5.vim',       { 'for': 'html' }
-Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
-Plug 'neoclide/jsonc.vim'
-Plug 'tpope/vim-surround'
 Plug 'gorkunov/smartpairs.vim'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-Plug 'itchyny/lightline.vim'
 "html
 Plug 'Valloric/MatchTagAlways'
 Plug 'jiangmiao/auto-pairs'
@@ -31,7 +25,7 @@ call plug#end()
 set t_Co=256
 set background=dark
 set termguicolors
-colorscheme one
+colorscheme janah
 let mapleader=" "
 set lazyredraw
 nnoremap <Leader>w :w<CR>
@@ -52,7 +46,7 @@ set number	" Show line numbers
 set linebreak	" Break lines at word (requires Wrap lines)
 set textwidth=100	" Line wrap (number of cols)
 set showmatch	" Highlight matching brace
-set spell	" Enable spell-checking
+set nospell	" Enable spell-checking
 set visualbell	" Use visual bell (no beeping)
 set cursorline
 set hlsearch	" Highlight all search results
@@ -266,6 +260,8 @@ nnoremap <silent> <Leader>ft :Filetypes<CR>
 imap <C-x><C-f> <plug>(fzf-complete-file-ag)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
+"airline
+let g:airline#extensions#tabline#enabled = 1
 function! SearchWordWithAg()
   execute 'Ag' expand('<cword>')
 endfunction
@@ -286,5 +282,3 @@ function! SearchWithAgInDirectory(...)
 endfunction
 command! -nargs=+ -complete=dir AgIn call SearchWithAgInDirectory(<f-args>)
 " }}}
-
-
