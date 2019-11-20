@@ -1,5 +1,5 @@
 call plug#begin('~/.local/share/nvim/plugged')
-"Plug 'ntpeters/vim-better-whitespace'
+Plug 'ntpeters/vim-better-whitespace'
 Plug 'itchyny/vim-cursorword'
 Plug 'vim-airline/vim-airline'
 Plug 'terryma/vim-multiple-cursors'
