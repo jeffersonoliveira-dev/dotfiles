@@ -10,10 +10,15 @@ Plug 'jparise/vim-graphql'
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'maxmellon/vim-jsx-pretty',   { 'for': ['javascript', 'javascript.jsx','typescript', 'typescript.tsx'] }
 Plug 'gorkunov/smartpairs.vim'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+" coc extensions
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" typescript
+Plug 'ianks/vim-tsx'
 "html
 Plug 'Valloric/MatchTagAlways'
 Plug 'jiangmiao/auto-pairs'
@@ -120,10 +125,6 @@ nmap <S-Tab> gT
 
 "terminal
 nnoremap <Leader><Enter> :terminal<CR>
-
-" stay in normal mode after inserting a new line
-noremap o o <Bs><Esc>
-noremap O O <Bs><Esc>
 
 " prettier
 autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
@@ -232,18 +233,6 @@ endif
 
 set nocompatible
 filetype plugin indent on
-augroup filetypes
-  autocmd!
-  autocmd BufNewFile,BufRead .babelrc set filetype=json
-  autocmd BufNewFile,BufRead .eslintrc set filetype=json
-  autocmd BufNewFile,BufRead .prettierrc set filetype=json
-  autocmd BufNewFile,BufRead tsconfig.json set filetype=jsonc
-  autocmd BufNewFile,BufRead .gitignore set filetype=config
-  autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
-  autocmd BufNewFile,BufRead *.js set filetype=javascript.tsx
-  autocmd BufNewFile,BufRead zprofile set filetype=zsh
-augroup END
-
 
 nnoremap <expr> <Leader>o (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
 nnoremap <silent> <Leader>a :Buffers<CR>
@@ -282,3 +271,13 @@ function! SearchWithAgInDirectory(...)
 endfunction
 command! -nargs=+ -complete=dir AgIn call SearchWithAgInDirectory(<f-args>)
 " }}}
+
+" == AUTOCMD ================================
+" by default .ts file are not identified as typescript and .tsx files are not
+" identified as typescript react file, so add following
+au BufNewFile,BufRead *.ts setlocal filetype=typescript
+au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
+" == AUTOCMD END ================================
+
+
+let g:AutoPairsFlyMode = 1
