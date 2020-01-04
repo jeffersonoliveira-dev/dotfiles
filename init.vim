@@ -2,8 +2,12 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'itchyny/vim-cursorword'
 Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'mhinz/vim-janah'
+" nerdtree
+Plug 'scrooloose/nerdtree'
+Plug 'ryanoasis/vim-devicons'
 " Graphql
 Plug 'jparise/vim-graphql'
 "javascript
@@ -26,7 +30,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'Yggdroot/indentLine'
 
 call plug#end()
-
 set t_Co=256
 set background=dark
 set termguicolors
@@ -65,7 +68,6 @@ set softtabstop=4	" Number of spaces per Tab
 " Advanced
 set ruler	" Show row and column ruler information
 set ttyfast
-set undolevels=1000	" Number of undo levels
 set backspace=indent,eol,start	" Backspace behaviour
 inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
@@ -280,4 +282,7 @@ au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
 " == AUTOCMD END ================================
 
 
-let g:AutoPairsFlyMode = 1
+"nerdtree
+map <C-a> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
