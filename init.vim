@@ -1,15 +1,19 @@
 call plug#begin('~/.local/share/nvim/plugged')
+
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'itchyny/vim-cursorword'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-commentary'
+Plug 'tweekmonster/django-plus.vim'
+Plug 'gryf/pylint-vim'
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'ryanoasis/vim-devicons'
+Plug 'dikiaap/minimalist'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'mhinz/vim-janah'
+Plug 'chriskempson/base16-vim'
+Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 " nerdtree
 Plug 'scrooloose/nerdtree'
-Plug 'ryanoasis/vim-devicons'
-" Graphql
-Plug 'jparise/vim-graphql'
 "javascript
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'maxmellon/vim-jsx-pretty',   { 'for': ['javascript', 'javascript.jsx','typescript', 'typescript.tsx'] }
@@ -33,7 +37,8 @@ call plug#end()
 set t_Co=256
 set background=dark
 set termguicolors
-colorscheme janah
+syntax on
+colorscheme minimalist
 let mapleader=" "
 set lazyredraw
 nnoremap <Leader>w :w<CR>
@@ -41,11 +46,11 @@ set noswapfile
 set nobackup
 set nowb
 set scrolloff=8
-set relativenumber
 set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
+set relativenumber
 set textwidth=0
 set linespace=2
 set smarttab
@@ -64,7 +69,6 @@ set incsearch	" Searches for strings incrementally
 set smartindent	" Enable smart-indent
 set smarttab	" Enable smart-tabs
 set softtabstop=4	" Number of spaces per Tab
-
 " Advanced
 set ruler	" Show row and column ruler information
 set ttyfast
@@ -128,9 +132,6 @@ nmap <S-Tab> gT
 "terminal
 nnoremap <Leader><Enter> :terminal<CR>
 
-" prettier
-autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
-
 "use ; to issue a command"
 nnoremap ; :
 
@@ -176,26 +177,9 @@ filetype indent on
 " close buffer
 nnoremap <silent> <leader>bd :bd<CR>
 
-" horizontal split with new buffer
-nnoremap <silent> <leader>bh :new<CR>
-
-" improved keyboard support for navigation (especially terminal)
-" https://neovim.io/doc/user/nvim_terminal_emulator.html
-tnoremap <Esc> <C-\><C-n>
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
 
 " Start terminal in insert mode
 au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-nnoremap <silent> <leader>tv :vnew<CR>:terminal<CR>
-nnoremap <silent> <leader>th :new<CR>:terminal<CR>
-tnoremap <C-x> <C-\><C-n><C-w>q
 
 " visual search mappings
 function! s:VSetSearch()
@@ -243,8 +227,6 @@ nnoremap <silent> <Leader>; :BLines<CR>
 nnoremap <silent> <Leader>? :History<CR>
 nnoremap <silent> <Leader>/ :execute 'Ag ' . input('Ag/')<CR>
 nnoremap <silent> <Leader>. :AgIn
-nnoremap <silent> K :call SearchWordWithAg()<CR>
-vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
 nnoremap <silent> <Leader>gl :Commits<CR>
 nnoremap <silent> <Leader>ga :BCommits<CR>
 nnoremap <silent> <Leader>ft :Filetypes<CR>
@@ -286,3 +268,41 @@ au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
 map <C-a> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+
+function! LinterStatus() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+
+  return l:counts.total == 0 ? '✨ all good ✨' : printf(
+        \   '😞 %dW %dE',
+        \   all_non_errors,
+        \   all_errors
+        \)
+endfunction
+
+set statusline=
+set statusline+=%m
+set statusline+=\ %f
+set statusline+=%=
+set statusline+=\ %{LinterStatus()}
+
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+set shortmess+=c
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
