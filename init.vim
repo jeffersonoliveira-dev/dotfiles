@@ -1,8 +1,55 @@
 call plug#begin('~/.local/share/nvim/plugged')
-
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'itchyny/vim-cursorword'
+Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+    augroup nerdtree
+      autocmd!
+        autocmd FileType nerdtree setlocal nolist " turn off whitespace characters
+        autocmd FileType nerdtree setlocal nocursorline " turn off line highlighting for performance
+    augroup END
+    let NERDTreeShowHidden=1
+
+    function! ToggleNerdTree()
+            if @% != "" && @% !~ "Startify" && (!exists("g:NERDTree") || (g:NERDTree.ExistsForTab() && !g:NERDTree.IsOpen()))
+                :NERDTreeFind
+            else
+                :NERDTreeToggle
+            endif
+          endfunction
+     let g:WebDevIconsOS = 'Darwin'
+        let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+        let g:DevIconsEnableFoldersOpenClose = 1
+        let g:DevIconsEnableFolderExtensionPatternMatching = 1
+        let NERDTreeDirArrowExpandable = "\u00a0" " make arrows invisible
+        let NERDTreeDirArrowCollapsible = "\u00a0" " make arrows invisible
+        let NERDTreeNodeDelimiter = "\u263a" " smiley face
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'mhinz/vim-startify'
+        let g:startify_lists = [
+        \  { 'type': 'dir',       'header': [ 'Files '. getcwd() ] },
+        \  { 'type': 'sessions',  'header': [ 'Sessions' ]       },
+        \  { 'type': 'bookmarks', 'header': [ 'Bookmarks' ]      },
+        \  { 'type': 'commands',  'header': [ 'Commands' ]       },
+        \ ]
+
+        let g:startify_commands = [
+        \   { 'up': [ 'Update Plugins', ':PlugUpdate' ] },
+        \   { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
+        \ ]
+
+        let g:startify_bookmarks = [
+            \ { 'c': '~/.config/nvim/init.vim' },
+            \ { 'g': '~/.gitconfig' },
+            \ { 'z': '~/.zshrc' }
+        \ ]
+
+        autocmd User Startified setlocal cursorline
+        nmap <leader>st :Startify<cr>
 Plug 'vim-airline/vim-airline'
+Plug 'vim-syntastic/syntastic'
+Plug 'liuchengxu/vista.vim'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-commentary'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'gryf/pylint-vim'
@@ -10,10 +57,7 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'ryanoasis/vim-devicons'
 Plug 'dikiaap/minimalist'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'chriskempson/base16-vim'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
-" nerdtree
-Plug 'scrooloose/nerdtree'
 "javascript
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'maxmellon/vim-jsx-pretty',   { 'for': ['javascript', 'javascript.jsx','typescript', 'typescript.tsx'] }
@@ -32,8 +76,8 @@ Plug 'Valloric/MatchTagAlways'
 Plug 'jiangmiao/auto-pairs'
 "indent
 Plug 'Yggdroot/indentLine'
-
 call plug#end()
+
 set t_Co=256
 set background=dark
 set termguicolors
@@ -206,8 +250,7 @@ set cmdheight=2
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 " don't give |ins-completion-menu| messages.
-set shortmess+=c
-
+set shortmess=I
 " always show signcolumns
 set signcolumn=yes
 
@@ -239,7 +282,11 @@ function! SearchWordWithAg()
   execute 'Ag' expand('<cword>')
 endfunction
 
-function! SearchVisualSelectionWithAg() range
+"airline theme
+let g:airline_theme='deus'
+
+
+function! SearchVisualSelertionWithAg() range
   let old_reg = getreg('"')
   let old_regtype = getregtype('"')
   let old_clipboard = &clipboard
@@ -262,11 +309,6 @@ command! -nargs=+ -complete=dir AgIn call SearchWithAgInDirectory(<f-args>)
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
 " == AUTOCMD END ================================
-
-
-"nerdtree
-map <C-a> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
 function! LinterStatus() abort
@@ -293,7 +335,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-set shortmess+=c
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -306,3 +347,29 @@ function! s:show_documentation()
 endfunction
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+"nerdtre
+map <C-a> :call ToggleNerdTree()<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"vista
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+
+set statusline+=%{NearestMethodOrFunction()}
+
+" By default vista.vim never run if you don't call it explicitly.
+"
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+" terminal in insert mode
+if has('nvim')
+    autocmd TermOpen term://* startinsert
+endif
+
+
+"netrw
+let g:netrw_winsize = 15
