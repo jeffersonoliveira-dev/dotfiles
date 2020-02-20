@@ -1,88 +1,70 @@
-call plug#begin('~/.local/share/nvim/plugged')
+ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'skielbasa/vim-material-monokai'
+Plug 'sheerun/vim-polyglot'
+Plug 'ayu-theme/ayu-vim' " or other package manager
 Plug 'itchyny/vim-cursorword'
-Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-    augroup nerdtree
-      autocmd!
-        autocmd FileType nerdtree setlocal nolist " turn off whitespace characters
-        autocmd FileType nerdtree setlocal nocursorline " turn off line highlighting for performance
-    augroup END
-    let NERDTreeShowHidden=1
-
-    function! ToggleNerdTree()
-            if @% != "" && @% !~ "Startify" && (!exists("g:NERDTree") || (g:NERDTree.ExistsForTab() && !g:NERDTree.IsOpen()))
-                :NERDTreeFind
-            else
-                :NERDTreeToggle
-            endif
-          endfunction
-     let g:WebDevIconsOS = 'Darwin'
-        let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-        let g:DevIconsEnableFoldersOpenClose = 1
-        let g:DevIconsEnableFolderExtensionPatternMatching = 1
-        let NERDTreeDirArrowExpandable = "\u00a0" " make arrows invisible
-        let NERDTreeDirArrowCollapsible = "\u00a0" " make arrows invisible
-        let NERDTreeNodeDelimiter = "\u263a" " smiley face
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'mhinz/vim-startify'
-        let g:startify_lists = [
-        \  { 'type': 'dir',       'header': [ 'Files '. getcwd() ] },
-        \  { 'type': 'sessions',  'header': [ 'Sessions' ]       },
-        \  { 'type': 'bookmarks', 'header': [ 'Bookmarks' ]      },
-        \  { 'type': 'commands',  'header': [ 'Commands' ]       },
-        \ ]
-
-        let g:startify_commands = [
-        \   { 'up': [ 'Update Plugins', ':PlugUpdate' ] },
-        \   { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
-        \ ]
-
-        let g:startify_bookmarks = [
-            \ { 'c': '~/.config/nvim/init.vim' },
-            \ { 'g': '~/.gitconfig' },
-            \ { 'z': '~/.zshrc' }
-        \ ]
-
-        autocmd User Startified setlocal cursorline
-        nmap <leader>st :Startify<cr>
+Plug 'frazrepo/vim-rainbow'
+Plug 'ap/vim-buftabline'
+Plug 'alvan/vim-closetag'
+Plug 'rakr/vim-one'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-syntastic/syntastic'
-Plug 'liuchengxu/vista.vim'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-commentary'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'gryf/pylint-vim'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'ryanoasis/vim-devicons'
-Plug 'dikiaap/minimalist'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 "javascript
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'maxmellon/vim-jsx-pretty',   { 'for': ['javascript', 'javascript.jsx','typescript', 'typescript.tsx'] }
 Plug 'gorkunov/smartpairs.vim'
+Plug 'joshdick/onedark.vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 " coc extensions
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
+let g:coc_global_extensions = [
+        \ 'coc-css',
+        \ 'coc-json',
+        \ 'coc-tsserver',
+        \ 'coc-git',
+        \ 'coc-eslint',
+        \ 'coc-tslint-plugin',
+        \ 'coc-pairs',
+        \ 'coc-sh',
+        \ 'coc-vimlsp',
+        \ 'coc-emmet',
+        \ 'coc-prettier',
+        \ 'coc-ultisnips',
+        \ 'coc-explorer',
+        \ 'coc-actions'
+        \ ]
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " typescript
-Plug 'ianks/vim-tsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'HerringtonDarkholme/yats.vim'
+" or Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
 "html
 Plug 'Valloric/MatchTagAlways'
 Plug 'jiangmiao/auto-pairs'
 "indent
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
+let g:indentLine_char_list = ['|']
 call plug#end()
 
 set t_Co=256
-set background=dark
 set termguicolors
+set background=dark " or light if you prefer the light version
+let g:two_firewatch_italics=1
+colo one
+let g:airline_theme='bubblegum' " if you have Airline installed and want the associated theme
 syntax on
-colorscheme minimalist
 let mapleader=" "
 set lazyredraw
 nnoremap <Leader>w :w<CR>
@@ -151,7 +133,7 @@ set wrap linebreak nolist " only manuly insert line breaks
 set showmatch " show matching brackets for a moment
 
 " vim better whitespace
-let g:better_whitespace_enabled=1
+let g:better_whitespace_enabled=0
 let g:strip_whitespace_on_save=1
 let g:strip_whitespace_confirm=0
 
@@ -174,7 +156,7 @@ nmap <Tab> gt
 nmap <S-Tab> gT
 
 "terminal
-nnoremap <Leader><Enter> :terminal<CR>
+nnoremap <Leader><Enter> :term<CR>
 
 "use ; to issue a command"
 nnoremap ; :
@@ -254,36 +236,19 @@ set shortmess=I
 " always show signcolumns
 set signcolumn=yes
 
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
 
 set nocompatible
 filetype plugin indent on
 
 nnoremap <expr> <Leader>o (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
-nnoremap <silent> <Leader>a :Buffers<CR>
-nnoremap <silent> <Leader>A :Windows<CR>
-nnoremap <silent> <Leader>; :BLines<CR>
-nnoremap <silent> <Leader>? :History<CR>
-nnoremap <silent> <Leader>/ :execute 'Ag ' . input('Ag/')<CR>
-nnoremap <silent> <Leader>. :AgIn
-nnoremap <silent> <Leader>gl :Commits<CR>
-nnoremap <silent> <Leader>ga :BCommits<CR>
-nnoremap <silent> <Leader>ft :Filetypes<CR>
 imap <C-x><C-f> <plug>(fzf-complete-file-ag)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
 "airline
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 function! SearchWordWithAg()
   execute 'Ag' expand('<cword>')
 endfunction
-
-"airline theme
-let g:airline_theme='deus'
 
 
 function! SearchVisualSelertionWithAg() range
@@ -334,9 +299,12 @@ set statusline+=\ %{LinterStatus()}
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+nnoremap <C-a> :CocCommand explorer<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -348,28 +316,28 @@ endfunction
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
-"nerdtre
-map <C-a> :call ToggleNerdTree()<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"vista
-function! NearestMethodOrFunction() abort
-  return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
-
-set statusline+=%{NearestMethodOrFunction()}
-
-" By default vista.vim never run if you don't call it explicitly.
-"
-" If you want to show the nearest function in your statusline automatically,
-" you can add the following line to your vimrc
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
-" terminal in insert mode
+"" terminal in insert mode
 if has('nvim')
     autocmd TermOpen term://* startinsert
 endif
 
 
-"netrw
-let g:netrw_winsize = 15
+xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+
+let g:rainbow_active = 1
+"closetag
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
+
+let g:onedark_hide_endofbuffer = 1
+let g:onedark_terminal_italics = 1
+let g:airline_theme='onedark'
+

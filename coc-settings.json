@@ -7,6 +7,7 @@
     "diagnostic.maxWindowHeight": 20,
     "diagnostic.errorSign": "✖",
     "diagnostic.warningSign": "⚠",
+    "diagnostic.messageTarget": "echo",
     "diagnostic.infoSign": "●",
     "diagnostic.hintSign": "○",
     "git.addGBlameToBufferVar": true,
