@@ -1,12 +1,11 @@
  call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'skielbasa/vim-material-monokai'
 Plug 'sheerun/vim-polyglot'
-Plug 'ayu-theme/ayu-vim' " or other package manager
 Plug 'itchyny/vim-cursorword'
-Plug 'frazrepo/vim-rainbow'
 Plug 'ap/vim-buftabline'
+Plug 'liuchengxu/vim-which-key'
 Plug 'alvan/vim-closetag'
+Plug 'mhinz/vim-startify'
 Plug 'rakr/vim-one'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-syntastic/syntastic'
@@ -21,7 +20,6 @@ Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 "javascript
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'gorkunov/smartpairs.vim'
-Plug 'joshdick/onedark.vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 " coc extensions
 let g:coc_global_extensions = [
@@ -160,6 +158,10 @@ nnoremap <Leader><Enter> :term<CR>
 
 "use ; to issue a command"
 nnoremap ; :
+
+"use :W as :w"
+nnoremap :W :w
+""
 
 " copy yanked text to clipboard
 vnoremap <C-c> "+y
@@ -341,3 +343,12 @@ let g:onedark_hide_endofbuffer = 1
 let g:onedark_terminal_italics = 1
 let g:airline_theme='onedark'
 
+" Fix files with prettier, and then ESLint.
+let b:ale_fixers = ['prettier', 'eslint']
+" Equivalent to the above.
+let b:ale_fixers = {'javascript': ['prettier', 'eslint']}
+
+
+"vim which key
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+set timeoutlen=500

@@ -27,5 +27,5 @@
     "explorer.file.column.git.icon.modified": "✹",
     "explorer.file.column.git.icon.ignored": "☒",
     "explorer.openAction.changeDirectory": false,
-    "eslint.enable": false
+    "eslint.autoFixOnSave": true
 }
