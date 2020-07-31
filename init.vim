@@ -1,26 +1,31 @@
  call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
+Plug 'AndrewRadev/tagalong.vim'
 Plug 'itchyny/vim-cursorword'
 Plug 'ap/vim-buftabline'
-Plug 'liuchengxu/vim-which-key'
 Plug 'alvan/vim-closetag'
-Plug 'mhinz/vim-startify'
 Plug 'rakr/vim-one'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-syntastic/syntastic'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
-Plug 'tweekmonster/django-plus.vim'
 Plug 'gryf/pylint-vim'
-Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'ryanoasis/vim-devicons'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'preservim/nerdtree'
+"python
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 "javascript
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'Galooshi/vim-import-js'
 Plug 'gorkunov/smartpairs.vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+Plug  'posva/vim-vue'
+" ale
+Plug 'dense-analysis/ale'
 " coc extensions
 let g:coc_global_extensions = [
         \ 'coc-css',
@@ -41,20 +46,26 @@ let g:coc_global_extensions = [
 " fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
+" config PHP
+Plug 'StanAngeloff/php.vim'
+"PHP
+Plug '2072/PHP-Indenting-for-VIm'
+Plug 'phpstan/vim-phpstan'
 " typescript
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'HerringtonDarkholme/yats.vim'
-" or Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
 "html
 Plug 'Valloric/MatchTagAlways'
 Plug 'jiangmiao/auto-pairs'
 "indent
-"Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
+"git
+" Plug 'airblade/vim-gitgutter'
 let g:indentLine_char_list = ['|']
 call plug#end()
+
 
 set t_Co=256
 set termguicolors
@@ -153,8 +164,6 @@ nmap <Leader>h :bprevious<CR>
 nmap <Tab> gt
 nmap <S-Tab> gT
 
-"terminal
-nnoremap <Leader><Enter> :term<CR>
 
 "use ; to issue a command"
 nnoremap ; :
@@ -206,8 +215,6 @@ filetype indent on
 nnoremap <silent> <leader>bd :bd<CR>
 
 
-" Start terminal in insert mode
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
 " visual search mappings
 function! s:VSetSearch()
@@ -222,10 +229,7 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 " search and replace shortcut
 nmap <Leader>s :%s//cg<Left><Left><Left>
 
-"set encoding to utf8
-if &encoding != 'utf-8'
-    set encoding=utf-8              "Necessary to show Unicode glyphs
-endif
+set encoding=utf-8              "Necessary to show Unicode glyphs
 
 set nowritebackup
 " Better display for messages
@@ -306,7 +310,7 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-nnoremap <C-a> :CocCommand explorer<CR>
+map <C-a> :NERDTreeToggle<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -317,11 +321,6 @@ function! s:show_documentation()
 endfunction
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-"" terminal in insert mode
-if has('nvim')
-    autocmd TermOpen term://* startinsert
-endif
 
 
 xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
@@ -335,20 +334,44 @@ function! s:cocActionsOpenFromSelected(type) abort
   execute 'CocCommand actions.open ' . a:type
 endfunction
 
-let g:rainbow_active = 1
 "closetag
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
 
 let g:onedark_hide_endofbuffer = 1
 let g:onedark_terminal_italics = 1
 let g:airline_theme='onedark'
-
 " Fix files with prettier, and then ESLint.
 let b:ale_fixers = ['prettier', 'eslint']
 " Equivalent to the above.
 let b:ale_fixers = {'javascript': ['prettier', 'eslint']}
-
-
-"vim which key
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+let g:ale_linters_explicit = 1
+let g:ale_fix_on_save = 1
 set timeoutlen=500
+
+let g:tagalong_additional_filetypes = ['vue']
+let g:tagalong_verbose = 1
+
+
+" Mude para o modo normal com o esc
+tnoremap <Esc> <C-\><C-j>
+" start terminal in insert mode
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+function! OpenTerminal()
+  split term://zsh
+  resize 20
+endfunction
+nnoremap <c-j> :call OpenTerminal()<CR>
+
+" use alt+hjkl para mover entre split/vsplit paineis
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>
+
+" enter indented
+inoremap {<Enter> {<Enter>}<Esc>O
+
