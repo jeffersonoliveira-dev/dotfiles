@@ -1,49 +1,45 @@
- call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'rhysd/git-messenger.vim'
+Plug 'tpope/vim-fugitive'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
+Plug 'psliwka/vim-smoothie'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'epilande/vim-es2015-snippets'
+Plug 'epilande/vim-react-snippets'
+Plug 'tpope/vim-surround'
+Plug 'moll/vim-node', {'for': ['javascript', 'javascript.jsx', 'json']}
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'nvim-lua/completion-nvim'
 Plug 'AndrewRadev/tagalong.vim'
-Plug 'itchyny/vim-cursorword'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install'  }
+Plug 'RRethy/vim-illuminate'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install'  }
+Plug 'mileszs/ack.vim'
+Plug 'mattn/webapi-vim'
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'ap/vim-buftabline'
 Plug 'alvan/vim-closetag'
-Plug 'rakr/vim-one'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-syntastic/syntastic'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'gryf/pylint-vim'
+Plug 'rakr/vim-one'
+Plug 'vim-airline/vim-airline'
 Plug 'ryanoasis/vim-devicons'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'liuchengxu/vista.vim'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/nerdtree'
-"python
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 "javascript
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'Galooshi/vim-import-js'
+Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 Plug 'gorkunov/smartpairs.vim'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug  'posva/vim-vue'
+Plug 'neovim/nvim-lsp'
 " ale
 Plug 'dense-analysis/ale'
-" coc extensions
-let g:coc_global_extensions = [
-        \ 'coc-css',
-        \ 'coc-json',
-        \ 'coc-tsserver',
-        \ 'coc-git',
-        \ 'coc-eslint',
-        \ 'coc-tslint-plugin',
-        \ 'coc-pairs',
-        \ 'coc-sh',
-        \ 'coc-vimlsp',
-        \ 'coc-emmet',
-        \ 'coc-prettier',
-        \ 'coc-ultisnips',
-        \ 'coc-explorer',
-        \ 'coc-actions'
-        \ ]
-" fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " config PHP
@@ -62,19 +58,17 @@ Plug 'jiangmiao/auto-pairs'
 "indent
 Plug 'Yggdroot/indentLine'
 "git
-" Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 let g:indentLine_char_list = ['|']
 call plug#end()
-
 
 set t_Co=256
 set termguicolors
 set background=dark " or light if you prefer the light version
-let g:two_firewatch_italics=1
-colo one
 let g:airline_theme='bubblegum' " if you have Airline installed and want the associated theme
 syntax on
 let mapleader=" "
+colo one
 set lazyredraw
 nnoremap <Leader>w :w<CR>
 set noswapfile
@@ -90,20 +84,6 @@ set textwidth=0
 set linespace=2
 set smarttab
 set autoindent
-set number	" Show line numbers
-set linebreak	" Break lines at word (requires Wrap lines)
-set textwidth=100	" Line wrap (number of cols)
-set showmatch	" Highlight matching brace
-set nospell	" Enable spell-checking
-set visualbell	" Use visual bell (no beeping)
-set cursorline
-set hlsearch	" Highlight all search results
-set smartcase	" Enable smart-case search
-set ignorecase	" Always case-insensitive
-set incsearch	" Searches for strings incrementally
-set smartindent	" Enable smart-indent
-set smarttab	" Enable smart-tabs
-set softtabstop=4	" Number of spaces per Tab
 " Advanced
 set ruler	" Show row and column ruler information
 set ttyfast
@@ -122,7 +102,6 @@ set showmode
 set modeline            " Enable modeline.
 set linespace=0         " Set line-spacing to minimum.
 set nojoinspaces        " Prevents insertin two spaces after punctuation on a join (J)
-
 
 " looks for JSX in just .js files
 let g:jsx_ext_required = 0
@@ -146,7 +125,7 @@ let g:better_whitespace_enabled=0
 let g:strip_whitespace_on_save=1
 let g:strip_whitespace_confirm=0
 
-" some stuff to get the mouse going in term
+
 set mouse=a
 
 "hide buffers when not displayed
@@ -161,16 +140,14 @@ nmap <Leader>l :bnext<CR>
 nmap <Leader>h :bprevious<CR>
 
 " key mapping for tab navigation
-nmap <Tab> gt
-nmap <S-Tab> gT
-
-
+" nmap <Tab> gt
+" nmap <S-Tab> gT
+"
 "use ; to issue a command"
 nnoremap ; :
 
 "use :W as :w"
 nnoremap :W :w
-""
 
 " copy yanked text to clipboard
 vnoremap <C-c> "+y
@@ -190,11 +167,13 @@ inoremap jk <Esc><Esc>
 inoremap kj <Esc><Esc>
 
 "make <c-l> clear the highlight as well as redraw
-nnoremap <C-l> :nohls<CR><C-L>
-inoremap <C-l> <C-O>:nohls<CR>
-set ruler
+nnoremap <C-m> :nohls<CR><C-L>
+inoremap <C-m> <C-O>:nohls<CR>
+
+
 "jump to last cursor position when opening a file
 "dont do it when writing a commit log entry
+"
 autocmd BufReadPost * call SetCursorPosition()
 
 function! SetCursorPosition()
@@ -204,7 +183,8 @@ function! SetCursorPosition()
             normal! zz
         endif
     end
-  endfunction
+ endfunction
+
 
   " file type recognition
 filetype on
@@ -213,8 +193,6 @@ filetype indent on
 
 " close buffer
 nnoremap <silent> <leader>bd :bd<CR>
-
-
 
 " visual search mappings
 function! s:VSetSearch()
@@ -238,10 +216,9 @@ set cmdheight=2
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 " don't give |ins-completion-menu| messages.
-set shortmess=I
+" set shortmess=I
 " always show signcolumns
 set signcolumn=yes
-
 
 set nocompatible
 filetype plugin indent on
@@ -250,12 +227,12 @@ nnoremap <expr> <Leader>o (len(system('git rev-parse')) ? ':Files' : ':GFiles --
 imap <C-x><C-f> <plug>(fzf-complete-file-ag)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
+
 "airline
 let g:airline#extensions#tabline#enabled = 0
 function! SearchWordWithAg()
   execute 'Ag' expand('<cword>')
 endfunction
-
 
 function! SearchVisualSelertionWithAg() range
   let old_reg = getreg('"')
@@ -301,38 +278,13 @@ set statusline+=\ %f
 set statusline+=%=
 set statusline+=\ %{LinterStatus()}
 
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
-
-
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
 map <C-a> :NERDTreeToggle<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
 
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-
-xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 if (has("termguicolors"))
  set termguicolors
 endif
-
-function! s:cocActionsOpenFromSelected(type) abort
-  execute 'CocCommand actions.open ' . a:type
-endfunction
 
 "closetag
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
@@ -342,10 +294,19 @@ let g:onedark_terminal_italics = 1
 let g:airline_theme='onedark'
 " Fix files with prettier, and then ESLint.
 let b:ale_fixers = ['prettier', 'eslint']
+let b:ale_linter_aliases = [ 'javascript', 'vue' ]
+let b:ale_liters = ['eslint']
 " Equivalent to the above.
 let b:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'vue': ['prettier', 'eslint'],
+\}
 let g:ale_linters_explicit = 1
 let g:ale_fix_on_save = 1
+" let g:ale_completion_autoimport = 1
+" let g:ale_completion_autoimport = 1
 set timeoutlen=500
 
 let g:tagalong_additional_filetypes = ['vue']
@@ -375,3 +336,161 @@ nnoremap <A-l> <C-w>
 " enter indented
 inoremap {<Enter> {<Enter>}<Esc>O
 
+"vista
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+
+
+set statusline+=%{NearestMethodOrFunction()}
+
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+let g:vista_fzf_preview = ['right:50%']
+
+let g:vista#renderer#enable_icon = 1
+
+let g:vista#renderer#icons = {
+\   "function": "\uf794",
+\   "variable": "\uf71b",
+\  }
+
+
+"markdown preview
+let g:mkdp_browser = 'Firefox'
+let g:mkdp_echo_preview_url = 1
+
+nmap <Leader>f :Prettier<CR>
+nmap <Leader>p :Ag<CR>
+
+" ack
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+" nvim lsp
+:lua << END
+  require'nvim_lsp'.tsserver.setup{}
+END
+
+" completition
+lua require'nvim_lsp'.tsserver.setup{on_attach=require'completion'.on_attach}
+autocmd BufEnter * lua require'completion'.on_attach()
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+inoremap <silent><expr> <C-space> completion#trigger_completion()
+
+"tags
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_project_root = ['package.json', '.git']
+let g:gutentags_ctags_exclude = [
+      \ '*.git', '*.svg', '*.hg',
+      \ '*/tests/*',
+      \ 'build',
+      \ 'dist',
+      \ '*sites/*/files/*',
+      \ 'bin',
+      \ 'node_modules',
+      \ 'bower_components',
+      \ 'cache',
+      \ 'compiled',
+      \ 'docs',
+      \ 'example',
+      \ 'bundle',
+      \ 'vendor',
+      \ '*.md',
+      \ '*-lock.json',
+      \ '*.lock',
+      \ '*bundle*.js',
+      \ '*build*.js',
+      \ '.*rc*',
+      \ '*.json',
+      \ '*.min.*',
+      \ '*.map',
+      \ '*.bak',
+      \ '*.zip',
+      \ '*.pyc',
+      \ '*.class',
+      \ '*.sln',
+      \ '*.Master',
+      \ '*.csproj',
+      \ '*.tmp',
+      \ '*.csproj.user',
+      \ '*.cache',
+      \ '*.pdb',
+      \ 'tags*',
+      \ 'cscope.*',
+      \ '*.css',
+      \ '*.less',
+      \ '*.scss',
+      \ '*.exe', '*.dll',
+      \ '*.mp3', '*.ogg', '*.flac',
+      \ '*.swp', '*.swo',
+      \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+      \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+      \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
+      \ ]
+
+let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
+command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')
+
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
+
+let g:gutentags_ctags_extra_args = [
+      \ '--tag-relative=yes',
+      \ '--fields=+ailmnS',
+      \ ]
+
+
+"better identing
+vnoremap < <gv
+vnoremap > >gv
+
+"moving between buffers
+nnoremap <silent> <TAB> :bnext<CR>
+nnoremap <silent> <S-TAB> :bprevious<CR>
+
+
+" Move selected line / block of text in visual mode
+" shift + k to move up
+" shift + j to move down
+xnoremap K :move '<-2<CR>gv-gv
+xnoremap J :move '>+1<CR>gv-gv
+
+" Better window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+
+" Use alt + hjkl to resize windows
+nnoremap <silent> <M-j>    :resize -2<CR>
+nnoremap <silent> <M-k>    :resize +2<CR>
+nnoremap <silent> <M-h>    :vertical resize -2<CR>
+nnoremap <silent> <M-l>    :vertical resize +2<CR>
+
+"gitgutter
+let g:gitgutter_sign_added              = '▎'
+let g:gitgutter_sign_modified           = '▎'
+let g:gitgutter_sign_removed            = '契'
+let g:gitgutter_sign_removed_first_line = '契'
+let g:gitgutter_sign_modified_removed   = '▎'
+let g:gitgutter_preview_win_floating = 1
+
+let g:gitgutter_enabled = 1
+
+highlight GitGutterAdd    guifg=#98c379 ctermfg=2
+highlight GitGutterChange guifg=#61afef ctermfg=3
+highlight GitGutterDelete guifg=#e06c75 ctermfg=1
