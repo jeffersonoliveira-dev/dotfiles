@@ -1,43 +1,65 @@
 call plug#begin('~/.local/share/nvim/plugged')
+"git
 Plug 'rhysd/git-messenger.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+"terminal
+Plug 'voldikss/vim-floaterm'
+"whitespace
 Plug 'ntpeters/vim-better-whitespace'
+"languages
 Plug 'sheerun/vim-polyglot'
+"scroll smooth
 Plug 'psliwka/vim-smoothie'
+"snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'epilande/vim-es2015-snippets'
 Plug 'epilande/vim-react-snippets'
+"utility
 Plug 'tpope/vim-surround'
+"syntax / node
 Plug 'moll/vim-node', {'for': ['javascript', 'javascript.jsx', 'json']}
+"tags
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'nvim-lua/completion-nvim'
+"completition
+" Plug 'nvim-lua/completion-nvim'
+"closing tags
 Plug 'AndrewRadev/tagalong.vim'
+Plug 'alvan/vim-closetag'
+"mardown preview
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install'  }
+"highlight
 Plug 'RRethy/vim-illuminate'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install'  }
+"search
 Plug 'mileszs/ack.vim'
 Plug 'mattn/webapi-vim'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'ap/vim-buftabline'
-Plug 'alvan/vim-closetag'
 Plug 'vim-airline/vim-airline-themes'
+"top bar
+Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
+Plug 'ryanoasis/vim-devicons'
+Plug 'Akin909/nvim-bufferline.lua'
 Plug 'tpope/vim-commentary'
 Plug 'gryf/pylint-vim'
 Plug 'rakr/vim-one'
 Plug 'vim-airline/vim-airline'
 Plug 'ryanoasis/vim-devicons'
 Plug 'liuchengxu/vista.vim'
+"multiple cursors
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/nerdtree'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 "javascript
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'javascript.jsx'] }
+"import file
 Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 Plug 'gorkunov/smartpairs.vim'
-Plug  'posva/vim-vue'
-Plug 'neovim/nvim-lsp'
+Plug 'posva/vim-vue'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neovim/nvim-lsp'
 " ale
 Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -54,11 +76,11 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 "html
 Plug 'Valloric/MatchTagAlways'
+" Plug 'frazrepo/vim-rainbow'
+" Plug 'luochen1990/rainbow'
 Plug 'jiangmiao/auto-pairs'
 "indent
 Plug 'Yggdroot/indentLine'
-"git
-Plug 'airblade/vim-gitgutter'
 let g:indentLine_char_list = ['|']
 call plug#end()
 
@@ -80,6 +102,7 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set relativenumber
+set number
 set textwidth=0
 set linespace=2
 set smarttab
@@ -88,8 +111,6 @@ set autoindent
 set ruler	" Show row and column ruler information
 set ttyfast
 set backspace=indent,eol,start	" Backspace behaviour
-inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 " turn on syntax highlighting
 syntax enable
 set clipboard=unnamed
@@ -140,14 +161,14 @@ nmap <Leader>l :bnext<CR>
 nmap <Leader>h :bprevious<CR>
 
 " key mapping for tab navigation
-" nmap <Tab> gt
-" nmap <S-Tab> gT
+nmap <Tab> gt
+nmap <S-Tab> gT
 "
 "use ; to issue a command"
 nnoremap ; :
 
 "use :W as :w"
-nnoremap :W :w
+" nnoremap :W :w
 
 " copy yanked text to clipboard
 vnoremap <C-c> "+y
@@ -292,36 +313,27 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php,*.jsx,*.tsx"
 let g:onedark_hide_endofbuffer = 1
 let g:onedark_terminal_italics = 1
 let g:airline_theme='onedark'
+
+"ale
 " Fix files with prettier, and then ESLint.
-let b:ale_fixers = ['prettier', 'eslint']
-let b:ale_linter_aliases = [ 'javascript', 'vue' ]
-let b:ale_liters = ['eslint']
+" let b:ale_fixers = ['prettier', 'eslint']
+" let b:ale_linter_aliases = [ 'javascript', 'vue' ]
+" let b:ale_liters = ['eslint']
 " Equivalent to the above.
-let b:ale_fixers = {'javascript': ['prettier', 'eslint']}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
+\   'typescript': ['eslint','prettier'],
 \   'vue': ['prettier', 'eslint'],
 \}
 let g:ale_linters_explicit = 1
 let g:ale_fix_on_save = 1
-" let g:ale_completion_autoimport = 1
-" let g:ale_completion_autoimport = 1
+let g:ale_completion_autoimport = 1
 set timeoutlen=500
 
+"tagalong
 let g:tagalong_additional_filetypes = ['vue']
 let g:tagalong_verbose = 1
-
-
-" Mude para o modo normal com o esc
-tnoremap <Esc> <C-\><C-j>
-" start terminal in insert mode
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-function! OpenTerminal()
-  split term://zsh
-  resize 20
-endfunction
-nnoremap <c-j> :call OpenTerminal()<CR>
 
 " use alt+hjkl para mover entre split/vsplit paineis
 tnoremap <A-h> <C-\><C-n><C-w>h
@@ -368,17 +380,17 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 " nvim lsp
-:lua << END
-  require'nvim_lsp'.tsserver.setup{}
-END
+" :lua << END
+"   require'nvim_lsp'.tsserver.setup{}
+" END
 
 " completition
-lua require'nvim_lsp'.tsserver.setup{on_attach=require'completion'.on_attach}
-autocmd BufEnter * lua require'completion'.on_attach()
+" lua require'nvim_lsp'.tsserver.setup{on_attach=require'completion'.on_attach}
+" autocmd BufEnter * lua require'completion'.on_attach()
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
@@ -458,8 +470,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 "moving between buffers
-nnoremap <silent> <TAB> :bnext<CR>
-nnoremap <silent> <S-TAB> :bprevious<CR>
+" nnoremap <silent> <TAB> :bnext<CR>
+" nnoremap <silent> <S-TAB> :bprevious<CR>
 
 
 " Move selected line / block of text in visual mode
@@ -494,3 +506,31 @@ let g:gitgutter_enabled = 1
 highlight GitGutterAdd    guifg=#98c379 ctermfg=2
 highlight GitGutterChange guifg=#61afef ctermfg=3
 highlight GitGutterDelete guifg=#e06c75 ctermfg=1
+
+"top bar
+" lua require'bufferline'.setup()
+
+"ultisnippets
+let g:UltiSnipsExpandTrigger="<c-y>"
+
+" highlight
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+" floatterm
+
+" let g:floaterm_wintype='normal'
+" let g:floaterm_height=6
+
+let g:floaterm_keymap_toggle = '<Leader><Enter>'
+let g:floaterm_keymap_next   = '<S-l>'
+let g:floaterm_keymap_prev   = '<S-h>'
+let g:floaterm_keymap_new    = '<S-j>'
+
+" Floaterm
+let g:floaterm_gitcommit='floaterm'
+let g:floaterm_autoinsert=1
+let g:floaterm_width=0.8
+let g:floaterm_height=0.8
+let g:floaterm_wintitle=0
+let g:floaterm_autoclose=1
