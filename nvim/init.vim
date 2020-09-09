@@ -6,8 +6,10 @@ source $HOME/.config/nvim/general/plugins.vim
 "general settings
 source $HOME/.config/nvim/general/settings.vim
 
+
 "theme
 source $HOME/.config/nvim/general/theme.vim
+
 
 "keymaps
 source $HOME/.config/nvim/general/keymaps.vim
@@ -29,3 +31,5 @@ source $HOME/.config/nvim/plug-config/tagalong.vim
 source $HOME/.config/nvim/plug-config/vim-gitgutter.vim
 source $HOME/.config/nvim/plug-config/fzf.vim
 source $HOME/.config/nvim/plug-config/tabline.vim
+source $HOME/.config/nvim/plug-config/highlight.vim
+source $HOME/.config/nvim/plug-config/which-key.vim

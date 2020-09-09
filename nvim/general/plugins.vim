@@ -5,6 +5,10 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
+"snippets
+" Plug 'SirVer/ultisnips'
+" Plug 'mlaursen/vim-react-snippets'
+
 "terminal
 Plug 'voldikss/vim-floaterm'
 
@@ -25,7 +29,8 @@ Plug 'AndrewRadev/tagalong.vim'
 Plug 'alvan/vim-closetag'
 
 "highlight
-Plug 'RRethy/vim-illuminate'
+" Plug 'RRethy/vim-illuminate'
+Plug 'dominikduda/vim_current_word'
 
 "css color
 Plug 'norcalli/nvim-colorizer.lua'
@@ -76,4 +81,9 @@ Plug 'Valloric/MatchTagAlways'
 "indent
 Plug 'Yggdroot/indentLine'
 
+"startify
+Plug 'mhinz/vim-startify'
+
+"whichkey
+" Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 call plug#end()

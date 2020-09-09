@@ -12,14 +12,14 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-set relativenumber
-set number
+set number relativenumber
+" set relativenumber
 set textwidth=0
 set linespace=2
 set smarttab
 set autoindent
-set encoding=utf-8 
-
+set encoding=utf-8
+set hidden
 " Advanced
 set ruler	" Show row and column ruler information
 set ttyfast
@@ -33,9 +33,9 @@ set history=1000
 " status bar
 set showcmd
 set showmode
-set modeline            " Enable modeline.
-set linespace=0         " Set line-spacing to minimum.
-set nojoinspaces        " Prevents insertin two spaces after punctuation on a join (J)
+set modeline      " Enable modeline.
+set linespace=0   " Set line-spacing to minimum.
+set nojoinspaces  " Prevents insertin two spaces after punctuation on a join (J)
 
 " wrap quickfix window
 autocmd FileType qf setlocal wrap linebreak
@@ -65,13 +65,23 @@ if (has("termguicolors"))
  set termguicolors
 endif
 
+set nobackup
 set nowritebackup
+set shortmess+=c
+set signcolumn=yes
+
 " Better display for messages
 set cmdheight=2
 
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-set signcolumn=yes
+set updatetime=50
+" color column
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+
 
 set nocompatible
 filetype plugin indent on
+
+"timeout
+set timeoutlen=500

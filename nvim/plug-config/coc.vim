@@ -3,6 +3,9 @@ nmap <silent> gd <Plug>(coc-definition) " definition
 nmap <silent> gy <Plug>(coc-type-definition) " type
 nmap <silent> gr <Plug>(coc-references) " reference
 
+"settup
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
 "jump errors
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -28,7 +31,7 @@ function! ShowDocIfNoDiagnostic(timer_id)
 endfunction
 
 function! s:show_hover_doc()
-  call timer_start(400, 'ShowDocIfNoDiagnostic')
+  call timer_start(2000, 'ShowDocIfNoDiagnostic')
 endfunction
 
 autocmd CursorHoldI * :call <SID>show_hover_doc()
