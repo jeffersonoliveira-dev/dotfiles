@@ -21,11 +21,10 @@ endfunction
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
-\   'typescript': ['eslint','prettier'],
+\   'typescript': ['prettier'],
 \   'vue': ['prettier', 'eslint'],
 \}
 let g:ale_linters_explicit = 1
 let g:ale_fix_on_save = 1
 let g:ale_completion_autoimport = 1
 set timeoutlen=500
-

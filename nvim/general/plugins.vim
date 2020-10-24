@@ -5,31 +5,26 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-"snippets
-" Plug 'SirVer/ultisnips'
-" Plug 'mlaursen/vim-react-snippets'
-
+"one buffer to rule them all
+Plug 'numtostr/BufOnly.nvim', { 'on': 'BufOnly' }
 "terminal
 Plug 'voldikss/vim-floaterm'
 
 "whitespace
 Plug 'ntpeters/vim-better-whitespace'
 
-"languages
-Plug 'sheerun/vim-polyglot'
-
 "utility
 Plug 'tpope/vim-surround'
-
-"tags
-Plug 'ludovicchabant/vim-gutentags'
 
 "closing tags
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'alvan/vim-closetag'
 
+"completion
+Plug 'nvim-lua/completion-nvim'
+Plug 'neovim/nvim-lspconfig'
+
 "highlight
-" Plug 'RRethy/vim-illuminate'
 Plug 'dominikduda/vim_current_word'
 
 "css color
@@ -42,8 +37,11 @@ Plug 'vim-airline/vim-airline'
 "comments
 Plug 'tpope/vim-commentary'
 
+"i3
+Plug 'mboughaba/i3config.vim'
+
 "theme
-Plug 'rakr/vim-one'
+Plug 'joshdick/onedark.vim'
 
 "tree
 Plug 'ryanoasis/vim-devicons'
@@ -56,9 +54,13 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'gorkunov/smartpairs.vim'
 Plug 'jiangmiao/auto-pairs'
 
-"completion lsp
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-tsserver']
+"lsp
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/completion-treesitter'
+Plug 'tjdevries/lsp_extensions.nvim'
+
+"diagnostic
+Plug 'haorenW1025/diagnostic-nvim'
 
 "linter / fixer
 Plug 'dense-analysis/ale'
@@ -67,23 +69,10 @@ Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-"tabline
-" Plug 'LinArcX/mpbtl'
-
-"javascript/Typescript
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-
 "html
 Plug 'Valloric/MatchTagAlways'
 
 "indent
 Plug 'Yggdroot/indentLine'
 
-"startify
-Plug 'mhinz/vim-startify'
-
-"whichkey
-" Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 call plug#end()

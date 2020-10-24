@@ -9,7 +9,6 @@ function! SetCursorPosition()
     end
  endfunction
 
-
  function! s:VSetSearch()
     let temp = @@
     norm! gvy
@@ -44,6 +43,11 @@ function! AirlineInit()
     \ })
 
 " then override the default layout for section c with your new part
-  let g:airline_section_c = airline#section#create(['%<', '%f', 'modified', ' ', 'readonly'])
+let g:airline_section_c = airline#section#create(['%<', '%f', 'modified', ' ', 'readonly'])
 endfunction
 autocmd VimEnter * call AirlineInit()
+
+
+let g:UltiSnipsExpandTrigger="<c-y>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
