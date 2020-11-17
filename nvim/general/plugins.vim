@@ -1,5 +1,4 @@
 call plug#begin('~/.local/share/nvim/plugged')
-
 "git
 Plug 'rhysd/git-messenger.vim'
 Plug 'tpope/vim-fugitive'
@@ -7,6 +6,7 @@ Plug 'airblade/vim-gitgutter'
 
 "one buffer to rule them all
 Plug 'numtostr/BufOnly.nvim', { 'on': 'BufOnly' }
+
 "terminal
 Plug 'voldikss/vim-floaterm'
 
@@ -22,10 +22,11 @@ Plug 'alvan/vim-closetag'
 
 "completion
 Plug 'nvim-lua/completion-nvim'
-Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/completion-treesitter'
 
 "highlight
 Plug 'dominikduda/vim_current_word'
+Plug 'nvim-treesitter/nvim-treesitter'
 
 "css color
 Plug 'norcalli/nvim-colorizer.lua'
@@ -41,10 +42,21 @@ Plug 'tpope/vim-commentary'
 Plug 'mboughaba/i3config.vim'
 
 "theme
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
+" Plug 'mhartington/oceanic-next'
 
+"icon
+Plug 'kyazdani42/nvim-web-devicons'
+
+"bar
+Plug 'romgrk/barbar.nvim'
+
+"startify
+Plug 'mhinz/vim-startify'
 "tree
 Plug 'ryanoasis/vim-devicons'
+
 Plug 'preservim/nerdtree'
 
 "multiple cursors
@@ -55,15 +67,16 @@ Plug 'gorkunov/smartpairs.vim'
 Plug 'jiangmiao/auto-pairs'
 
 "lsp
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-treesitter/completion-treesitter'
+Plug 'neovim/nvim-lspconfig'
 Plug 'tjdevries/lsp_extensions.nvim'
 
 "diagnostic
-Plug 'haorenW1025/diagnostic-nvim'
 
+Plug 'RishabhRD/popfix'
+
+Plug 'RishabhRD/nvim-lsputils'
 "linter / fixer
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 "searcher
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }

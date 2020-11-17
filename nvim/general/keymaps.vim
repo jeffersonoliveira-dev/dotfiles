@@ -3,8 +3,8 @@ nnoremap / /\v\c
 vnoremap / /\v\c
 
 "moving between buffers
-nnoremap <silent> <TAB> :bnext<CR>
-nnoremap <silent> <S-TAB> :bprevious<CR>
+" nnoremap <silent> <TAB> :bnext<CR>
+" nnoremap <silent> <S-TAB> :bprevious<CR>
 
 " copy yanked text to clipboard
 vnoremap <C-c> "+y

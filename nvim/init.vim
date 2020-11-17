@@ -15,12 +15,11 @@ source $HOME/.config/nvim/general/keymaps.vim
 source $HOME/.config/nvim/general/functions.vim
 
 "plugins config
-
 "airline
 source $HOME/.config/nvim/plug-config/airline.vim
 
 "ale
-source $HOME/.config/nvim/plug-config/ale.vim
+" source $HOME/.config/nvim/plug-config/ale.vim
 
 "better white space
 source $HOME/.config/nvim/plug-config/better-whitespace.vim
@@ -51,3 +50,10 @@ source $HOME/.config/nvim/plug-config/fzf.vim
 " source $HOME/.config/nvim/plug-config/tabline.vim
 
 source $HOME/.config/nvim/plug-config/highlight.vim
+
+source $HOME/.config/nvim/plug-config/barbar.vim
+
+" lua require
+lua require("lsp_config")
+
+

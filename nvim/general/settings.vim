@@ -85,3 +85,7 @@ filetype plugin indent on
 
 "timeout
 set timeoutlen=500
+
+let g:LanguageClient_serverCommands = {
+    \ 'vue': ['vls']
+    \ }
