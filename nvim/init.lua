@@ -1,0 +1,38 @@
+-- General mappings
+require('plugins')
+require('keymappings')
+require('settings')
+require('utils')
+require('colorscheme')
+
+-- Plugins
+require('plug-autopairs')
+require('plug-barbar')
+require('plug-nvimtree')
+require('plug-treesitter')
+require('plug-compe')
+require('plug-emmet')
+require('plug-floaterm')
+require('plug-gitsigns')
+require('plug-illuminate')
+require('plug-startify')
+require('plug-telescope')
+require('plug-galaxyline')
+require('plug-closetag')
+
+-- LSP
+
+  require('lsp')
+  require('lsp.lua-ls')
+  require('lsp.bash-ls')
+  require('lsp.js-ts-ls')
+  require('lsp.python-ls')
+  require('lsp.json-ls')
+  require('lsp.yaml-ls')
+  require('lsp.vim-ls')
+  require('lsp.graphql-ls')
+  require('lsp.css-ls')
+  require('lsp.docker-ls')
+  require('lsp.html-ls')
+  require('lsp.efm-general-ls')
+  require('lsp.virtual_text')

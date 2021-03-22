@@ -1,6 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =4
-let g:netrw_dirhist_4='/home/jefferson/.config/nvim'
-let g:netrw_dirhist_3='/home/jefferson/Documents/projects/DClick/app'
-let g:netrw_dirhist_2='/home/jefferson/Documents/projects/DClick/app/src'
-let g:netrw_dirhist_1='/home/jefferson/Documents/projects/DClick/app'
