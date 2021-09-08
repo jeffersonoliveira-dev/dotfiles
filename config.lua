@@ -103,6 +103,8 @@ lvim.builtin.treesitter.highlight.enabled = true
 --   }
 -- }
 
+lvim.lang.javascript.formatters = { { exe = "prettier"}}
+
 -- Additional Plugins
 -- lvim.plugins = {
 --     {"folke/tokyonight.nvim"},
