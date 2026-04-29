@@ -45,6 +45,14 @@
       "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
       "src": "https://github.com/iamcco/markdown-preview.nvim"
     },
+    "mason-lspconfig.nvim": {
+      "rev": "0c2823e0418f3d9230ff8b201c976e84de1cb401",
+      "src": "https://github.com/mason-org/mason-lspconfig.nvim"
+    },
+    "mason.nvim": {
+      "rev": "cb8445f8ce85d957416c106b780efd51c6298f89",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
     "mini.files": {
       "rev": "ced297546b8fdb8e215d416d4753a735514a2fe0",
       "src": "https://github.com/echasnovski/mini.files"
@@ -96,6 +104,10 @@
     "nvim-dap-vscode-js": {
       "rev": "03bd29672d7fab5e515fc8469b7d07cc5994bbf6",
       "src": "https://github.com/mxsdev/nvim-dap-vscode-js"
+    },
+    "nvim-lspconfig": {
+      "rev": "6419b36f50c42420cbbf1d3ffba573094cf414c8",
+      "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-nio": {
       "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",

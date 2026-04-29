@@ -24,32 +24,101 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-vim.lsp.enable({ "gopls" })
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local ok_blink, blink = pcall(require, "blink.cmp")
+if ok_blink and blink.get_lsp_capabilities then
+	capabilities = blink.get_lsp_capabilities(capabilities)
+end
 
-vim.lsp.config("ts_ls", {
-	settings = {
-		typescript = {
-			suggest = {
-				autoImports = true,
-			},
-			preferences = {
-				includeCompletionsForModuleExports = true,
-				includeCompletionsForImportStatements = true,
-			},
-		},
-		javascript = {
-			suggest = {
-				autoImports = true,
-			},
-			preferences = {
-				includeCompletionsForModuleExports = true,
-				includeCompletionsForImportStatements = true,
+local servers = {
+	gopls = {
+		capabilities = capabilities,
+		settings = {
+			gopls = {
+				analyses = {
+					unusedparams = true,
+				},
+				staticcheck = true,
+				gofumpt = true,
 			},
 		},
 	},
-})
+	jdtls = {
+		capabilities = capabilities,
+		cmd = { "jdtls" },
+		filetypes = { "java" },
+		root_markers = {
+			".git",
+			"gradlew",
+			"mvnw",
+			"pom.xml",
+			"build.gradle",
+			"build.gradle.kts",
+			"settings.gradle",
+			"settings.gradle.kts",
+		},
+		single_file_support = false,
+	},
+	pyright = {
+		capabilities = capabilities,
+		settings = {
+			python = {
+				analysis = {
+					autoSearchPaths = true,
+					diagnosticMode = "workspace",
+					typeCheckingMode = "basic",
+					useLibraryCodeForTypes = true,
+				},
+			},
+		},
+	},
+	rust_analyzer = {
+		capabilities = capabilities,
+		settings = {
+			["rust-analyzer"] = {
+				cargo = {
+					allFeatures = true,
+				},
+				checkOnSave = {
+					command = "clippy",
+				},
+			},
+		},
+	},
+	solargraph = {
+		capabilities = capabilities,
+		cmd = { "solargraph", "stdio" },
+	},
+	ts_ls = {
+		capabilities = capabilities,
+		settings = {
+			typescript = {
+				suggest = {
+					autoImports = true,
+				},
+				preferences = {
+					includeCompletionsForModuleExports = true,
+					includeCompletionsForImportStatements = true,
+				},
+			},
+			javascript = {
+				suggest = {
+					autoImports = true,
+				},
+				preferences = {
+					includeCompletionsForModuleExports = true,
+					includeCompletionsForImportStatements = true,
+				},
+			},
+		},
+	},
+}
 
-vim.lsp.enable("ts_ls")
+for name, config in pairs(servers) do
+	vim.lsp.config(name, config)
+end
+
+vim.lsp.enable(vim.tbl_keys(servers))
 
 vim.diagnostic.config({
 	severity_sort = true,
