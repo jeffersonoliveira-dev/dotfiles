@@ -5,6 +5,7 @@ vim.keymap.set("n", "<C-n>", vim.cmd.NvimTreeToggle)
 
 local function on_attach(bufnr)
 	local api = require("nvim-tree.api")
+	api.config.mappings.default_on_attach(bufnr)
 
 	local opts = function(desc)
 		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }

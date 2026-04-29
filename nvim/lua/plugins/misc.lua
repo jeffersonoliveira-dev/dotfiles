@@ -12,7 +12,10 @@ vim.diagnostic.config({
 require("bufferline").setup({
 	options = {
 		mode = "buffers",
+		numbers = "none",
 		separator_style = "thin",
+		modified_icon = "●",
+		show_modified_icon = true,
 		show_buffer_close_icons = true,
 		show_close_icon = true,
 		always_show_bufferline = true,

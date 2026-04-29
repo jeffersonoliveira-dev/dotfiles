@@ -51,11 +51,42 @@ require("lualine").setup({
 		lualine_y = { "progress" },
 		lualine_z = { "location" },
 	},
-	tabline = {
-		lualine_a = { "tabs" },
-	},
 	inactive_sections = {
 		lualine_c = { { "filename", path = 1, file_status = true } },
+	},
+	winbar = {
+		lualine_c = {
+			{
+				"filename",
+				path = 1,
+				file_status = true,
+				newfile_status = true,
+				symbols = {
+					modified = " ●",
+					readonly = " ",
+					unnamed = "[No Name]",
+					newfile = " [New]",
+				},
+				fmt = shorten_path_keep_filename,
+			},
+		},
+	},
+	inactive_winbar = {
+		lualine_c = {
+			{
+				"filename",
+				path = 1,
+				file_status = true,
+				newfile_status = true,
+				symbols = {
+					modified = " ●",
+					readonly = " ",
+					unnamed = "[No Name]",
+					newfile = " [New]",
+				},
+				fmt = shorten_path_keep_filename,
+			},
+		},
 	},
 	extensions = {},
 })

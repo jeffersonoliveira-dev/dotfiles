@@ -1,6 +1,7 @@
 require("auto-session").setup({
-	auto_restore = true,
+	auto_restore = false,
 	auto_save = true,
+	bypass_save_filetypes = { "NvimTree", "alpha" },
 	auto_session_suppress_dirs = {
 		"~",
 		"~/Downloads",
