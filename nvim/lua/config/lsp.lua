@@ -19,7 +19,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
 		map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action")
 		map("n", "<leader>f", function()
-			vim.lsp.buf.format({ async = true })
+			require("conform").format({
+				async = true,
+				lsp_fallback = true,
+			})
 		end, "Format buffer")
 	end,
 })
@@ -28,6 +31,52 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 local ok_blink, blink = pcall(require, "blink.cmp")
 if ok_blink and blink.get_lsp_capabilities then
 	capabilities = blink.get_lsp_capabilities(capabilities)
+end
+
+local ts_ls_bin = vim.fn.exepath("typescript-language-server")
+if ts_ls_bin == "" then
+	ts_ls_bin = "typescript-language-server"
+end
+local ts_ls_entry = vim.uv.fs_realpath(ts_ls_bin) or ts_ls_bin
+local vtsls_bin = vim.fn.exepath("vtsls")
+if vtsls_bin == "" then
+	vtsls_bin = "vtsls"
+end
+local vtsls_entry = vim.uv.fs_realpath(vtsls_bin) or vtsls_bin
+local node_bin = "/usr/bin/node"
+if vim.fn.executable(node_bin) ~= 1 then
+	node_bin = vim.fn.exepath("node")
+end
+
+local ts_server_name = vim.fn.executable(vtsls_entry) == 1 and "vtsls" or "ts_ls"
+local ts_server_config = {
+	capabilities = capabilities,
+	settings = {
+		typescript = {
+			suggest = {
+				autoImports = true,
+			},
+			preferences = {
+				includeCompletionsForModuleExports = true,
+				includeCompletionsForImportStatements = true,
+			},
+		},
+		javascript = {
+			suggest = {
+				autoImports = true,
+			},
+			preferences = {
+				includeCompletionsForModuleExports = true,
+				includeCompletionsForImportStatements = true,
+			},
+		},
+	},
+}
+
+if ts_server_name == "vtsls" then
+	ts_server_config.cmd = { node_bin, vtsls_entry, "--stdio" }
+else
+	ts_server_config.cmd = { node_bin, ts_ls_entry, "--stdio" }
 end
 
 local servers = {
@@ -65,7 +114,7 @@ local servers = {
 			python = {
 				analysis = {
 					autoSearchPaths = true,
-					diagnosticMode = "workspace",
+					diagnosticMode = "openFilesOnly",
 					typeCheckingMode = "basic",
 					useLibraryCodeForTypes = true,
 				},
@@ -80,7 +129,7 @@ local servers = {
 					allFeatures = true,
 				},
 				checkOnSave = {
-					command = "clippy",
+					command = "check",
 				},
 			},
 		},
@@ -89,30 +138,9 @@ local servers = {
 		capabilities = capabilities,
 		cmd = { "solargraph", "stdio" },
 	},
-	ts_ls = {
-		capabilities = capabilities,
-		settings = {
-			typescript = {
-				suggest = {
-					autoImports = true,
-				},
-				preferences = {
-					includeCompletionsForModuleExports = true,
-					includeCompletionsForImportStatements = true,
-				},
-			},
-			javascript = {
-				suggest = {
-					autoImports = true,
-				},
-				preferences = {
-					includeCompletionsForModuleExports = true,
-					includeCompletionsForImportStatements = true,
-				},
-			},
-		},
-	},
 }
+
+servers[ts_server_name] = ts_server_config
 
 for name, config in pairs(servers) do
 	vim.lsp.config(name, config)
@@ -128,10 +156,9 @@ vim.diagnostic.config({
 		source = "if_many",
 	},
 	underline = true,
-	virtual_text = {
-		spacing = 2,
-		source = "if_many",
-		prefix = "●",
+	virtual_text = false,
+	jump = {
+		float = true,
 	},
 	signs = {
 		text = {

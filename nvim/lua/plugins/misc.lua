@@ -1,13 +1,6 @@
 require("mini.pairs").setup()
 
-require("mini.files").setup()
-vim.keymap.set("n", "<M-2>", ":lua MiniFiles.open()<cr>", {})
-
 require("tiny-inline-diagnostic").setup()
-vim.diagnostic.config({
-	virtual_text = false,
-	jump = { float = true },
-})
 
 require("bufferline").setup({
 	options = {
