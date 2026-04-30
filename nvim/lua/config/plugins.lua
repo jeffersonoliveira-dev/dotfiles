@@ -1,5 +1,5 @@
 vim.pack.add({
-	{ src = "https://github.com/shaunsingh/nord.nvim" },
+	{ src = "https://github.com/navarasu/onedark.nvim" },
 	{ src = "https://github.com/folke/which-key.nvim" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/rcarriga/nvim-notify" },
@@ -40,7 +40,26 @@ vim.pack.add({
 	{ src = "https://github.com/Saecki/crates.nvim" },
 })
 
-local ok_colorscheme = pcall(vim.cmd, "colorscheme nord")
+pcall(function()
+	require("onedark").setup({
+		style = "dark",
+		transparent = false,
+		term_colors = true,
+		ending_tildes = false,
+		code_style = {
+			comments = "italic",
+			keywords = "none",
+			functions = "none",
+			strings = "none",
+			variables = "none",
+		},
+		highlights = {
+			CursorLine = { bg = "#2c313c" },
+		},
+	})
+end)
+
+local ok_colorscheme = pcall(vim.cmd, "colorscheme onedark")
 if not ok_colorscheme then
 	vim.cmd("colorscheme habamax")
 end
