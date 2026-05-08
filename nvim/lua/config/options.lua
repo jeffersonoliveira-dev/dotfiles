@@ -1,6 +1,22 @@
 vim.opt.shortmess:append("c")
 
-vim.opt.cmdheight = 2
+vim.g.experimental_ui2 = vim.env.NVIM_UI2 ~= "0"
+if vim.g.experimental_ui2 then
+	local ok_ui2, ui2 = pcall(require, "vim._core.ui2")
+	if ok_ui2 then
+		ui2.enable({
+			enable = true,
+			msg = {
+				targets = "msg",
+				msg = { timeout = 3000 },
+			},
+		})
+	end
+	vim.opt.cmdheight = 0
+else
+	vim.opt.cmdheight = 2
+end
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.updatetime = 500

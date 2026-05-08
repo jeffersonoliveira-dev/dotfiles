@@ -31,6 +31,11 @@ end)
 
 vim.keymap.set("n", "<leader>sn", ":cnext<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>sp", ":cprev<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Workspace diagnostics", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", { desc = "Buffer diagnostics", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<CR>", { desc = "Document symbols", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<CR>", { desc = "LSP references/defs", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle right<CR>", { desc = "Toggle outline", noremap = true, silent = true })
 
 -- IDE-like tree/file navigation
 vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle explorer", noremap = true, silent = true })

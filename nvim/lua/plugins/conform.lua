@@ -1,3 +1,14 @@
+local function has(bin)
+	return vim.fn.executable(bin) == 1
+end
+
+local js_formatters = {}
+if has("prettierd") then
+	js_formatters = { "prettierd", "prettier" }
+elseif has("prettier") then
+	js_formatters = { "prettier" }
+end
+
 require("conform").setup({
 	format_on_save = function(bufnr)
 		local max_size = 200 * 1024
@@ -21,9 +32,9 @@ require("conform").setup({
 		python = { "ruff_format", "black" },
 		htmldjango = { "djlint" },
 		html = { "djlint" },
-		javascript = { "prettierd", "prettier" },
-		typescript = { "prettierd", "prettier" },
-		javascriptreact = { "prettierd", "prettier" },
-		typescriptreact = { "prettierd", "prettier" },
+		javascript = js_formatters,
+		typescript = js_formatters,
+		javascriptreact = js_formatters,
+		typescriptreact = js_formatters,
 	},
 })

@@ -1,4 +1,5 @@
 require("mini.pairs").setup()
+require("mini.icons").setup()
 
 require("tiny-inline-diagnostic").setup()
 
