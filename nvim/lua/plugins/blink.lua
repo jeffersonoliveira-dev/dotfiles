@@ -13,11 +13,14 @@ require("blink.cmp").setup({
 		nerd_font_variant = "mono",
 	},
 	completion = {
+		menu = { border = "rounded" },
 		documentation = {
 			auto_show = true,
 			auto_show_delay_ms = 200,
+			window = { border = "rounded" },
 		},
 	},
+	signature = { window = { border = "rounded" } },
 	sources = {
 		default = { "lsp", "path", "snippets", "buffer" },
 	},

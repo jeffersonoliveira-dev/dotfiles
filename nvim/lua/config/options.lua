@@ -23,6 +23,10 @@ vim.opt.updatetime = 500
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.termguicolors = true
+-- Default border for LSP hovers, signature help, etc. (Neovim 0.11+). Plugins can override.
+if vim.fn.has("nvim-0.11") == 1 then
+	vim.o.winborder = "rounded"
+end
 vim.opt.completeopt = "menu,menuone,noselect,popup"
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2

@@ -1,3 +1,10 @@
+[[ -o interactive ]] || return
+
+# Auto-attach tmux session "main" (tmux must be installed).
+if [[ -z "${SKIP_TMUX:-}" ]] && [[ -z "${TMUX:-}" ]] && [[ "${TERM_PROGRAM:-}" != "vscode" ]] && command -v tmux >/dev/null 2>&1; then
+	exec tmux new-session -As main
+fi
+
 export ZSH="/home/jefferson/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git)

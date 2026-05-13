@@ -4,10 +4,11 @@ vim.pack.add({
 	{ src = "https://github.com/navarasu/onedark.nvim" },
 	{ src = "https://github.com/folke/which-key.nvim" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{ src = "https://github.com/rcarriga/nvim-notify" },
+	{ src = "https://github.com/folke/snacks.nvim" },
 	{ src = "https://github.com/MunifTanjim/nui.nvim" },
 	{ src = "https://github.com/folke/trouble.nvim" },
 	{ src = "https://github.com/mg979/vim-visual-multi" },
+	{ src = "https://github.com/b0o/schemastore.nvim" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
 	{ src = "https://github.com/nvim-tree/nvim-tree.lua" },
@@ -18,6 +19,7 @@ vim.pack.add({
 	{ src = "https://github.com/comfysage/artio.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 	{ src = "https://github.com/akinsho/toggleterm.nvim" },
+	{ src = "https://github.com/christoomey/vim-tmux-navigator" },
 	{ src = "https://github.com/rmagatti/auto-session" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
 	{ src = "https://github.com/mfussenegger/nvim-lint" },
@@ -37,13 +39,18 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-neotest/neotest-go" },
 	{ src = "https://github.com/marilari88/neotest-vitest" },
 	{ src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
+	{ src = "https://github.com/sphamba/smear-cursor.nvim" },
 	{ src = "https://github.com/heilgar/bookmarks.nvim" },
 	{ src = "https://github.com/kkharji/sqlite.lua" },
 	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+	{ src = "https://github.com/epwalsh/obsidian.nvim", version = "v3.9.0" },
 	{ src = "https://github.com/iamcco/markdown-preview.nvim" },
 	{ src = "https://github.com/Saecki/crates.nvim" },
 	{ src = "https://github.com/stevearc/aerial.nvim" },
 })
+
+-- snacks.nvim: run setup early (notifier, ui hooks). See lua/plugins/snacks.lua.
+require("plugins.snacks")
 
 pcall(function()
 	require("onedark").setup({
@@ -92,12 +99,15 @@ for _, module in ipairs({
 	"plugins.telescope",
 	"plugins.artio",
 	"plugins.project",
+	"plugins.tmux_navigator",
 	"plugins.toggleterm",
 	"plugins.conform",
 	"plugins.lint",
 	"plugins.lualine",
+	"plugins.smear_cursor",
 	"plugins.misc",
 	"plugins.aerial",
+	"plugins.obsidian",
 	"plugins.session",
 }) do
 	safe_require(module)

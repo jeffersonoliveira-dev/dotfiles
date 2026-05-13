@@ -47,6 +47,10 @@ require("toggleterm").setup({
 	direction = "horizontal",
 	close_on_exit = true,
 	shell = vim.o.shell,
+	float_opts = {
+		border = "rounded",
+		winblend = 8,
+	},
 	on_open = function(term)
 		local dir = detect_project_dir()
 		if dir and dir ~= "" then

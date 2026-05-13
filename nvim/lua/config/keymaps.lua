@@ -22,6 +22,20 @@ vim.keymap.set("v", "<", "<gv", { noremap = true })
 
 vim.keymap.set("n", "Y", "yy")
 vim.keymap.set("v", "<C-c>", '"+y')
+
+-- Mover linha (normal) ou bloco de linhas (visual linha / bloco — move as linhas tocadas)
+vim.keymap.set("n", "<M-j>", "<cmd>m+1<CR>==", { desc = "Move line down", noremap = true })
+vim.keymap.set("n", "<M-k>", "<cmd>m-2<CR>==", { desc = "Move line up", noremap = true })
+vim.keymap.set("v", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down", noremap = true, silent = true })
+vim.keymap.set("v", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up", noremap = true, silent = true })
+
+-- Clipboard do sistema (registro +): copiar seleção / linha, colar, trocar seleção pelo clipboard
+vim.keymap.set("v", "<leader>y", '"+y', { desc = "Yank selection to OS clipboard", noremap = true })
+vim.keymap.set("n", "<leader>yy", '"+yy', { desc = "Yank line to OS clipboard", noremap = true })
+vim.keymap.set("n", "<leader>p", '"+p', { desc = "Paste clipboard after cursor", noremap = true })
+vim.keymap.set("n", "<leader>P", '"+P', { desc = "Paste clipboard before cursor", noremap = true })
+vim.keymap.set("v", "<leader>p", '"_d"+P', { desc = "Replace selection with clipboard", noremap = true })
+vim.keymap.set("i", "<M-v>", "<C-r>+", { desc = "Paste clipboard (insert mode)", noremap = true })
 vim.keymap.set("n", "<leader>ge", function()
 	vim.diagnostic.jump({ count = 1 })
 end)
@@ -42,19 +56,20 @@ vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle exp
 vim.keymap.set("n", "<leader>o", "<cmd>NvimTreeFindFile<CR>", { desc = "Reveal current file in explorer", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>E", "<cmd>NvimTreeFocus<CR>", { desc = "Focus explorer", noremap = true, silent = true })
 
--- Window navigation
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Focus left window", noremap = true, silent = true })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Focus lower window", noremap = true, silent = true })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Focus upper window", noremap = true, silent = true })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Focus right window", noremap = true, silent = true })
+-- Window / tmux-pane navigation: Ctrl+h/j/k/l → vim-tmux-navigator (see plugins/tmux_navigator.lua)
 
 -- Buffer navigation
 vim.keymap.set("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Previous buffer", noremap = true, silent = true })
 vim.keymap.set("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Previous buffer", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Delete buffer", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bd", function()
+	Snacks.bufdelete()
+end, { desc = "Delete buffer (keep layout)", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>bo", "<cmd>BufferLineCloseOthers<CR>", { desc = "Close other buffers", noremap = true, silent = true })
+-- Buffer alternado (#) em split; outro buffer: `:vert sb 3`, `:sb nome` (tab) ou `gb` / `<leader>sb` + Ctrl-v / Ctrl-x
+vim.keymap.set("n", "<leader>bV", "<cmd>vertical sbuffer #<CR>", { desc = "Alternate buffer in vsplit", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bS", "<cmd>sbuffer #<CR>", { desc = "Alternate buffer in hsplit", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>1", "<cmd>BufferLineGoToBuffer 1<CR>", { desc = "Go to buffer 1", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>2", "<cmd>BufferLineGoToBuffer 2<CR>", { desc = "Go to buffer 2", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>3", "<cmd>BufferLineGoToBuffer 3<CR>", { desc = "Go to buffer 3", noremap = true, silent = true })

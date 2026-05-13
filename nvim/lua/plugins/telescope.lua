@@ -1,6 +1,28 @@
 local builtin = require("telescope.builtin")
+local themes = require("telescope.themes")
+
+-- Default horizontal/flex layout splits the tab from the alpha splash. After picking a
+-- file, the old split can stay as an empty side window. Dropdown uses a centered float
+-- so the first real buffer replaces alpha in the only editor split.
+local rounded = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
 
 require("telescope").setup({
+	defaults = themes.get_dropdown({
+		winblend = 6,
+		borderchars = {
+			prompt = rounded,
+			results = rounded,
+			preview = rounded,
+		},
+		layout_config = {
+			width = function(_, max_columns, _)
+				return math.min(max_columns, 120)
+			end,
+			height = function(_, _, max_lines)
+				return math.min(max_lines, math.floor(max_lines * 0.45))
+			end,
+		},
+	}),
 	pickers = {
 		buffers = {
 			initial_mode = "normal",

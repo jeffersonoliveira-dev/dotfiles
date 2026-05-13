@@ -54,39 +54,6 @@ require("lualine").setup({
 	inactive_sections = {
 		lualine_c = { { "filename", path = 1, file_status = true } },
 	},
-	winbar = {
-		lualine_c = {
-			{
-				"filename",
-				path = 1,
-				file_status = true,
-				newfile_status = true,
-				symbols = {
-					modified = " ●",
-					readonly = " ",
-					unnamed = "[No Name]",
-					newfile = " [New]",
-				},
-				fmt = shorten_path_keep_filename,
-			},
-		},
-	},
-	inactive_winbar = {
-		lualine_c = {
-			{
-				"filename",
-				path = 1,
-				file_status = true,
-				newfile_status = true,
-				symbols = {
-					modified = " ●",
-					readonly = " ",
-					unnamed = "[No Name]",
-					newfile = " [New]",
-				},
-				fmt = shorten_path_keep_filename,
-			},
-		},
-	},
+	-- Winbar duplicated the active filename with bufferline’s tab strip above.
 	extensions = {},
 })
