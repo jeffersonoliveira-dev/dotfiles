@@ -34,3 +34,13 @@ vim.opt.softtabstop = 2
 vim.opt.smartindent = true
 vim.opt.smarttab = true
 vim.opt.conceallevel = 2
+
+-- Visible whitespace (built-in); subtle via |hl-Whitespace| after colorscheme loads
+vim.opt.list = true
+vim.opt.listchars = "tab:▸ ,space:·,trail:·,extends:>,precedes:<,nbsp:+"
+vim.api.nvim_create_autocmd("ColorScheme", {
+	pattern = "*",
+	callback = function()
+		vim.api.nvim_set_hl(0, "Whitespace", { fg = "#4b5263" })
+	end,
+})
