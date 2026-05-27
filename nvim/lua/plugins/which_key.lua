@@ -25,6 +25,7 @@ wk.add({
 	{ "<leader>e", desc = "Explorer toggle" },
 	{ "<leader>E", desc = "Explorer focus" },
 	{ "<leader>f", group = "Finder" },
+	{ "<leader>fm", desc = "Telescope media (image preview)" },
 	{ "<leader>fs", desc = "Snacks smart find" },
 	{ "<leader>g", group = "Git/Diagnostics" },
 	{ "<leader>l", group = "Lint" },

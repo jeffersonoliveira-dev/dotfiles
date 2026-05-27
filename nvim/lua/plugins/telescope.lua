@@ -31,7 +31,15 @@ require("telescope").setup({
 			initial_mode = "normal",
 		},
 	},
+	extensions = {
+		-- Image/video/pdf previews use Chafa (and optional deps); see plugin README.
+		media_files = {
+			filetypes = { "png", "jpg", "jpeg", "webp", "gif", "svg", "mp4", "webm", "pdf" },
+		},
+	},
 })
+
+pcall(require("telescope").load_extension, "media_files")
 
 local function search_classes()
 	builtin.lsp_dynamic_workspace_symbols({
@@ -55,6 +63,16 @@ local function search_variables()
 end
 
 vim.keymap.set("n", "<C-p>", builtin.find_files, {})
+vim.keymap.set("n", "<leader>fm", function()
+	if not pcall(require("telescope").load_extension, "media_files") then
+		vim.notify(
+			"telescope-media-files unavailable. Sync plugins (pack) and install `chafa` for image previews.",
+			vim.log.levels.WARN
+		)
+		return
+	end
+	require("telescope").extensions.media_files.media_files()
+end, { desc = "Find media files (image preview)" })
 vim.keymap.set("n", "<C-e>", builtin.oldfiles, {})
 vim.keymap.set("n", "<leader>sf", search_functions, {})
 vim.keymap.set("n", "<leader>sc", search_classes, {})

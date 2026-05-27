@@ -75,12 +75,17 @@ end
 dashboard.section.buttons.val = buttons
 dashboard.section.footer.val = "Use p or numeric keys for language folders"
 dashboard.opts.opts.noautocmd = true
+-- alpha's VimEnter autostart is registered too late (during VimEnter, parent not nested),
+-- so it never runs on first launch. Disabling it avoids duplicate setup if that changes.
+dashboard.opts.opts.autostart = false
 
 alpha.setup(dashboard.opts)
 
--- Ensure dashboard is shown when Neovim starts without file arguments.
+-- Reuse the default buffer: `:Alpha` runs start(false) and creates a new buffer, leaving
+-- the initial empty [No Name] buffer listed (e.g. in bufferline). start(true) is the
+-- VimEnter path and replaces the startup buffer in place.
 if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == "" then
 	vim.schedule(function()
-		pcall(vim.cmd, "Alpha")
+		alpha.start(true)
 	end)
 end

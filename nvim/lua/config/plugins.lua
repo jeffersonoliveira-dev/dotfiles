@@ -16,6 +16,7 @@ vim.pack.add({
 	{ src = "https://github.com/Saghen/blink.cmp", version = "v1.6.0" },
 	{ src = "https://github.com/echasnovski/mini.nvim" },
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+	{ src = "https://github.com/nvim-telescope/telescope-media-files.nvim" },
 	{ src = "https://github.com/comfysage/artio.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 	{ src = "https://github.com/akinsho/toggleterm.nvim" },
