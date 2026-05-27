@@ -6,7 +6,7 @@ require("snacks").setup({
 	image = { enabled = true },
 	indent = { enabled = false },
 	input = { enabled = true },
-	lazygit = { enabled = false },
+	lazygit = { enabled = true },
 	notifier = { enabled = true, timeout = 4000 },
 	picker = { enabled = true, ui_select = true },
 	quickfile = { enabled = true },
@@ -48,3 +48,6 @@ end, { desc = "LSP rename file" })
 vim.keymap.set("n", "<leader>un", function()
 	Snacks.notifier.hide()
 end, { desc = "Dismiss notifications" })
+vim.keymap.set("n", "<leader>gl", function()
+	Snacks.lazygit.open()
+end, { desc = "Lazygit", noremap = true, silent = true })

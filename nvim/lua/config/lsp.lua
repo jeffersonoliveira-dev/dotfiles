@@ -305,6 +305,29 @@ if jsonls_bin ~= "" then
 	}
 end
 
+local emmet_ls_bin = vim.fn.exepath("emmet-ls")
+if emmet_ls_bin ~= "" then
+	servers.emmet_ls = {
+		capabilities = capabilities,
+		cmd = { emmet_ls_bin, "--stdio" },
+		filetypes = {
+			"css",
+			"eruby",
+			"html",
+			"htmldjango",
+			"javascriptreact",
+			"less",
+			"pug",
+			"sass",
+			"scss",
+			"typescriptreact",
+			"htmlangular",
+		},
+		root_markers = { ".git" },
+		single_file_support = true,
+	}
+end
+
 local yamlls_bin = vim.fn.exepath("yaml-language-server")
 if yamlls_bin ~= "" then
 	servers.yamlls = {

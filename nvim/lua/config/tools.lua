@@ -1,0 +1,13 @@
+-- Tooling notes (Neovim 0.12+). vim.pack installs *plugins* only, not language servers.
+--
+-- Native (already used in this config):
+--   vim.pack.add     — plugin manager (replaces lazy.nvim; not Mason)
+--   vim.lsp.config   + vim.lsp.enable — LSP (replaces lspconfig.setup + Mason for wiring)
+--   vim.diagnostic   — diagnostics UI
+--   :lsp enable|disable|restart — manage LSP clients
+--
+-- Install LSP/formatters on the system, e.g. Arch:
+--   sudo pacman -S gopls typescript-language-server vscode-json-language-server
+--                  yaml-language-server lua-language-server rust-analyzer
+--                  emmet-ls shellcheck golangci-lint delve
+--
