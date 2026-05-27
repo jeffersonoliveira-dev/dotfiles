@@ -18,6 +18,16 @@ local function on_attach(bufnr)
 	vim.keymap.set("n", "s", api.node.open.horizontal_no_picker, opts("Open horizontal split"))
 	vim.keymap.set("n", "v", api.node.open.vertical_no_picker, opts("Open vertical split"))
 	vim.keymap.set("n", "t", api.node.open.tab, opts("Open in new tab"))
+
+	-- File ops (focus tree first: <leader>e). Move = cut (m) then paste (p) on target.
+	vim.keymap.set("n", "F2", api.fs.rename, opts("Rename"))
+	vim.keymap.set("n", "r", api.fs.rename_basename, opts("Rename basename only"))
+	vim.keymap.set("n", "m", api.fs.cut, opts("Move (cut)"))
+	vim.keymap.set("n", "p", api.fs.paste, opts("Paste / move here"))
+	vim.keymap.set("n", "c", api.fs.copy.node, opts("Copy"))
+	vim.keymap.set("n", "a", api.fs.create, opts("New file or folder"))
+	vim.keymap.set("n", "d", api.fs.remove, opts("Delete"))
+	vim.keymap.set("n", "D", api.fs.trash, opts("Trash"))
 end
 
 require("nvim-tree").setup({

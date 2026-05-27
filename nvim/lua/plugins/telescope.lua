@@ -27,9 +27,6 @@ require("telescope").setup({
 		buffers = {
 			initial_mode = "normal",
 		},
-		bookmarks = {
-			initial_mode = "normal",
-		},
 	},
 	extensions = {
 		-- Image/video/pdf previews use Chafa (and optional deps); see plugin README.

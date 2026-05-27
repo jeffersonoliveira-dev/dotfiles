@@ -48,8 +48,6 @@ vim.pack.add({
 	{ src = "https://github.com/marilari88/neotest-vitest" },
 	{ src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
 	{ src = "https://github.com/sphamba/smear-cursor.nvim" },
-	{ src = "https://github.com/heilgar/bookmarks.nvim" },
-	{ src = "https://github.com/kkharji/sqlite.lua" },
 	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
 	{ src = "https://github.com/epwalsh/obsidian.nvim", version = "v3.9.0" },
 	{ src = "https://github.com/iamcco/markdown-preview.nvim" },
