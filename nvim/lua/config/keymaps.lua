@@ -45,15 +45,45 @@ end)
 
 vim.keymap.set("n", "<leader>sn", ":cnext<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>sp", ":cprev<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Workspace diagnostics", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", { desc = "Buffer diagnostics", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<CR>", { desc = "Document symbols", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<CR>", { desc = "LSP references/defs", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle right<CR>", { desc = "Toggle outline", noremap = true, silent = true })
+vim.keymap.set(
+	"n",
+	"<leader>xx",
+	"<cmd>Trouble diagnostics toggle<CR>",
+	{ desc = "Workspace diagnostics", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>xX",
+	"<cmd>Trouble diagnostics toggle filter.buf=0<CR>",
+	{ desc = "Buffer diagnostics", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>xs",
+	"<cmd>Trouble symbols toggle focus=false<CR>",
+	{ desc = "Document symbols", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>xl",
+	"<cmd>Trouble lsp toggle focus=false win.position=right<CR>",
+	{ desc = "LSP references/defs", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>a",
+	"<cmd>AerialToggle right<CR>",
+	{ desc = "Toggle outline", noremap = true, silent = true }
+)
 
 -- IDE-like tree/file navigation
 vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle explorer", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>o", "<cmd>NvimTreeFindFile<CR>", { desc = "Reveal current file in explorer", noremap = true, silent = true })
+vim.keymap.set(
+	"n",
+	"<leader>o",
+	"<cmd>NvimTreeFindFile<CR>",
+	{ desc = "Reveal current file in explorer", noremap = true, silent = true }
+)
 vim.keymap.set("n", "<leader>E", "<cmd>NvimTreeFocus<CR>", { desc = "Focus explorer", noremap = true, silent = true })
 
 -- Window / tmux-pane navigation: Ctrl+h/j/k/l → vim-tmux-navigator (see plugins/tmux_navigator.lua)
@@ -66,19 +96,79 @@ vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer", nore
 vim.keymap.set("n", "<leader>bd", function()
 	Snacks.bufdelete()
 end, { desc = "Delete buffer (keep layout)", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>bo", "<cmd>BufferLineCloseOthers<CR>", { desc = "Close other buffers", noremap = true, silent = true })
+vim.keymap.set(
+	"n",
+	"<leader>bo",
+	"<cmd>BufferLineCloseOthers<CR>",
+	{ desc = "Close other buffers", noremap = true, silent = true }
+)
 -- Buffer alternado (#) em split; outro buffer: `:vert sb 3`, `:sb nome` (tab) ou `gb` / `<leader>sb` + Ctrl-v / Ctrl-x
-vim.keymap.set("n", "<leader>bV", "<cmd>vertical sbuffer #<CR>", { desc = "Alternate buffer in vsplit", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>bS", "<cmd>sbuffer #<CR>", { desc = "Alternate buffer in hsplit", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>1", "<cmd>BufferLineGoToBuffer 1<CR>", { desc = "Go to buffer 1", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>2", "<cmd>BufferLineGoToBuffer 2<CR>", { desc = "Go to buffer 2", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>3", "<cmd>BufferLineGoToBuffer 3<CR>", { desc = "Go to buffer 3", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>4", "<cmd>BufferLineGoToBuffer 4<CR>", { desc = "Go to buffer 4", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>5", "<cmd>BufferLineGoToBuffer 5<CR>", { desc = "Go to buffer 5", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>6", "<cmd>BufferLineGoToBuffer 6<CR>", { desc = "Go to buffer 6", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>7", "<cmd>BufferLineGoToBuffer 7<CR>", { desc = "Go to buffer 7", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>8", "<cmd>BufferLineGoToBuffer 8<CR>", { desc = "Go to buffer 8", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>9", "<cmd>BufferLineGoToBuffer 9<CR>", { desc = "Go to buffer 9", noremap = true, silent = true })
+vim.keymap.set(
+	"n",
+	"<leader>bV",
+	"<cmd>vertical sbuffer #<CR>",
+	{ desc = "Alternate buffer in vsplit", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>bS",
+	"<cmd>sbuffer #<CR>",
+	{ desc = "Alternate buffer in hsplit", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>1",
+	"<cmd>BufferLineGoToBuffer 1<CR>",
+	{ desc = "Go to buffer 1", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>2",
+	"<cmd>BufferLineGoToBuffer 2<CR>",
+	{ desc = "Go to buffer 2", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>3",
+	"<cmd>BufferLineGoToBuffer 3<CR>",
+	{ desc = "Go to buffer 3", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>4",
+	"<cmd>BufferLineGoToBuffer 4<CR>",
+	{ desc = "Go to buffer 4", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>5",
+	"<cmd>BufferLineGoToBuffer 5<CR>",
+	{ desc = "Go to buffer 5", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>6",
+	"<cmd>BufferLineGoToBuffer 6<CR>",
+	{ desc = "Go to buffer 6", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>7",
+	"<cmd>BufferLineGoToBuffer 7<CR>",
+	{ desc = "Go to buffer 7", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>8",
+	"<cmd>BufferLineGoToBuffer 8<CR>",
+	{ desc = "Go to buffer 8", noremap = true, silent = true }
+)
+vim.keymap.set(
+	"n",
+	"<leader>9",
+	"<cmd>BufferLineGoToBuffer 9<CR>",
+	{ desc = "Go to buffer 9", noremap = true, silent = true }
+)
 vim.keymap.set("n", "gt", "<cmd>bnext<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gT", "<cmd>bprevious<CR>", { noremap = true, silent = true })
 
