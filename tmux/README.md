@@ -47,5 +47,5 @@ Session name **`main`** matches `new-session -As main` (create if missing, else 
 Edit `~/.tmux.conf` copy-mode bindings and use:
 
 ```tmux
-bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
+bind -T copy-mode Enter send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
 ```

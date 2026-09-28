@@ -69,6 +69,9 @@ vim.keymap.set(
 	"<cmd>Trouble lsp toggle focus=false win.position=right<CR>",
 	{ desc = "LSP references/defs", noremap = true, silent = true }
 )
+vim.keymap.set("n", "<leader>xw", function()
+	vim.lsp.buf.workspace_diagnostics()
+end, { desc = "Workspace diagnostics (native LSP)", noremap = true, silent = true })
 vim.keymap.set(
 	"n",
 	"<leader>a",

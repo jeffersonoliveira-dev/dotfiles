@@ -11,3 +11,6 @@
 --                  yaml-language-server lua-language-server rust-analyzer
 --                  emmet-ls shellcheck golangci-lint delve
 --
+-- lua-language-server: necessário para editar a própria config Neovim (lua_ls).
+-- Sem ele, arquivos .lua não recebem LSP. Instale e reinicie o Neovim.
+--

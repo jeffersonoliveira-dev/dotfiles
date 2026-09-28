@@ -1,3 +1,6 @@
+-- Neovim 0.12: vim.pack, vim.lsp.config/enable, lsp-defaults (gra/gri/grn/…),
+-- workspace_diagnostics, linked_editing_range, inline_completion (opt-in).
+-- Mantemos 'autocomplete' desligado: blink.cmp já cobre insert completion.
 vim.opt.shortmess:append("c")
 
 vim.g.experimental_ui2 = vim.env.NVIM_UI2 ~= "0"

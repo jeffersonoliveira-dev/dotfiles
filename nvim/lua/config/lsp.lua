@@ -32,6 +32,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 
 		map("n", "K", vim.lsp.buf.hover, "LSP Hover")
+		map("n", "gs", vim.lsp.buf.signature_help, "Signature help")
 		map("n", "gd", vim.lsp.buf.definition, "Go to definition")
 		map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
 		map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
@@ -54,6 +55,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Inlay hints (TS/vtsls, gopls): o servidor já recebe settings; o cliente precisa habilitar por buffer.
 		if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
 			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+		end
+
+		-- Neovim 0.12+: linked editing (HTML/emmet — tags abertura/fechamento sincronizadas).
+		if client:supports_method(vim.lsp.protocol.Methods.textDocument_linkedEditingRange) then
+			vim.lsp.linked_editing_range.enable(true, { bufnr = bufnr })
 		end
 	end,
 })
@@ -286,6 +292,42 @@ local servers = {
 }
 
 servers[ts_server_name] = ts_server_config
+
+-- Neovim config: merge com lsp/lua_ls.lua do nvim-lspconfig (runtimepath).
+local lua_ls_bin = vim.fn.exepath("lua-language-server")
+if lua_ls_bin ~= "" then
+	servers.lua_ls = {
+		capabilities = capabilities,
+		on_init = function(client)
+			if client.workspace_folders then
+				local path = client.workspace_folders[1].name
+				if
+					path ~= vim.fn.stdpath("config")
+					and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+				then
+					return
+				end
+			end
+
+			client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua or {}, {
+				runtime = {
+					version = "LuaJIT",
+					path = { "lua/?.lua", "lua/?/init.lua" },
+				},
+				workspace = {
+					checkThirdParty = false,
+					library = { vim.env.VIMRUNTIME },
+				},
+				diagnostics = {
+					globals = { "vim" },
+				},
+			})
+		end,
+		settings = {
+			Lua = {},
+		},
+	}
+end
 
 local jsonls_bin = vim.fn.exepath("vscode-json-language-server")
 if jsonls_bin ~= "" then

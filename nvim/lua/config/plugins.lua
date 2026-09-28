@@ -113,6 +113,7 @@ for _, module in ipairs({
 	"plugins.project",
 	"plugins.tmux_navigator",
 	"plugins.toggleterm",
+	"plugins.run_file",
 	"plugins.kulala",
 	"plugins.conform",
 	"plugins.lint",
